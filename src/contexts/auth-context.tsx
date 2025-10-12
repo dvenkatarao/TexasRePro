@@ -8,6 +8,8 @@ interface User {
   id: string;
   email: string;
   name: string;
+  firstName?: string;    // Add this
+  lastName?: string;     // Add this
   subscription: 'basic' | 'professional' | 'enterprise';
   confidenceScore: number;
   full_name?: string;
@@ -17,7 +19,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, fullName: string) => Promise<void>;
+  signup: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
   logout: () => Promise<void>;
   isLoading: boolean;
 }
@@ -46,10 +48,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser({
             id: profile.id,
             email: profile.email,
-            name: profile.full_name || profile.email.split('@')[0],
+            name: `${profile.first_name} ${profile.last_name}`, // Combine first + last
+            firstName: profile.first_name,    // Add this
+            lastName: profile.last_name,      // Add this
             subscription: profile.subscription_tier as any,
             confidenceScore: profile.confidence_score,
-            full_name: profile.full_name,
             avatar_url: profile.avatar_url
           });
         }

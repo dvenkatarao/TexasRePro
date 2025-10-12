@@ -8,7 +8,8 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, Area, AreaChart, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
+//import Header from '@/components/ui/header';
+import Navigation from '@/components/layout/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import ProtectedRoute from '@/components/auth/protected-route';
 
@@ -49,7 +50,7 @@ export default function Dashboard() {
   return (
     <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">

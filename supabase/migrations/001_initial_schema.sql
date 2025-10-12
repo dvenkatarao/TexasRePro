@@ -5,7 +5,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  full_name TEXT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
   avatar_url TEXT,
   subscription_tier TEXT DEFAULT 'basic' CHECK (subscription_tier IN ('basic', 'professional', 'enterprise')),
   confidence_score INTEGER DEFAULT 0,
@@ -122,3 +123,32 @@ $$ language 'plpgsql';
 
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_properties_updated_at BEFORE UPDATE ON properties FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Function to handle new user signups
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (
+    id, 
+    email, 
+    first_name, 
+    last_name, 
+    subscription_tier, 
+    confidence_score
+  )
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'first_name', 'User'),
+    COALESCE(NEW.raw_user_meta_data->>'last_name', SPLIT_PART(NEW.email, '@', 1)),
+    'basic',
+    0
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create trigger for new user signups (NO DROP needed - trigger doesn't exist yet)
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();

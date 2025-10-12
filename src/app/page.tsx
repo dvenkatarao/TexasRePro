@@ -11,6 +11,8 @@ import {
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
 import Header from '@/components/ui/header';
+import { ThemeToggle } from '@/components/theme-toggle';
+
 
 
 // Clock icon component
@@ -76,6 +78,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header */}
+      <ThemeToggle />
       <Header />
 
       {/* Hero Section */}

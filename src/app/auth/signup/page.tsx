@@ -16,12 +16,12 @@ export default function SignupPage() {
     lastName: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    //confirmPassword: '',
     investorType: 'beginner',
     agreeToTerms: false
   });
 
-  const { login, isLoading } = useAuth();
+  const { signup, isLoading } = useAuth();
   const { toast, showToast, hideToast } = useToast();
   const router = useRouter();
 
@@ -34,15 +34,17 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.agreeToTerms) {
+      showToast('Please agree to the terms and conditions', 'error');
+      return;
+    }
+
     try {
       // Use login function to authenticate (for demo purposes)
-      await login(formData.email, formData.password, formData.firstName, formData.lastName);
+      await signup(formData.email, formData.password, formData.firstName, formData.lastName);
       showToast('Account created successfully! Redirecting...', 'success');
       
-      // Redirect to dashboard after a short delay
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 1500);
+      router.push('/dashboard');
       
     } catch (error) {
       showToast('Error creating account', 'error');

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Home, Star, Eye, Bed, Bath, Square, TrendingUp, ChevronDown, Heart } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
+import Navigation from '@/components/layout/navigation';
 import HoverCard from '@/components/ui/hover-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Toast from '@/components/ui/toast';
@@ -170,7 +170,7 @@ export default function ListingsPage() {
   return (
     <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
