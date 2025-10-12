@@ -23,15 +23,11 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       await login(formData.email, formData.password);
       showToast('Successfully signed in! Redirecting...', 'success');
-      
-      // Redirect to dashboard after a short delay
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 1500);
+      router.push('/dashboard');
       
     } catch (error) {
       showToast('Invalid email or password', 'error');

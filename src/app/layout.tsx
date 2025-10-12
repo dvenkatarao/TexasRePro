@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { AuthProvider } from '@/contexts/auth-context';
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import { FavoritesProvider } from '@/contexts/favorites-context';
 
 export const metadata: Metadata = {
@@ -14,13 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased">
+      <ThemeProvider defaultTheme="light" storageKey="texasre-theme">
         <AuthProvider>
           <FavoritesProvider>
             {children}
           </FavoritesProvider>
         </AuthProvider>
+      </ThemeProvider>
       </body>
     </html>
   );

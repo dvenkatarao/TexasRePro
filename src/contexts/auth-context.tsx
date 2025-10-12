@@ -1,95 +1,180 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id: string;
-  firstName: string;
-  lastName: string;
   email: string;
+  name: string;
   subscription: 'basic' | 'professional' | 'enterprise';
   confidenceScore: number;
+  full_name?: string;
+  avatar_url?: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, fullName: string) => Promise<void>;
+  logout: () => Promise<void>;
   isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Key for localStorage
-const AUTH_STORAGE_KEY = 'texasrepro-auth';
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const supabase = createClient();
+  const router = useRouter();
 
-  // Load user from localStorage on mount
   useEffect(() => {
-    const loadAuthFromStorage = async () => {
-      try {
-        const storedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
-        if (storedAuth) {
-          const userData = JSON.parse(storedAuth);
-          setUser(userData);
+    const getUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        // Get user profile from database
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile) {
+          setUser({
+            id: profile.id,
+            email: profile.email,
+            name: profile.full_name || profile.email.split('@')[0],
+            subscription: profile.subscription_tier as any,
+            confidenceScore: profile.confidence_score,
+            full_name: profile.full_name,
+            avatar_url: profile.avatar_url
+          });
         }
-      } catch (error) {
-        console.error('Error loading auth from storage:', error);
-        // Clear corrupted data
-        localStorage.removeItem(AUTH_STORAGE_KEY);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
 
-    loadAuthFromStorage();
-  }, []);
+    getUser();
 
-  const login = async (email: string, password: string, firstName?: string, lastName?: string) => {
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profile) {
+            setUser({
+              id: profile.id,
+              email: profile.email,
+              name: profile.full_name || profile.email.split('@')[0],
+              subscription: profile.subscription_tier as any,
+              confidenceScore: profile.confidence_score,
+              full_name: profile.full_name,
+              avatar_url: profile.avatar_url
+            });
+          }
+        } else {
+          setUser(null);
+        }
+        setIsLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
-    
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        // Handle specific Supabase auth errors
+        if (error.message === 'Invalid login credentials') {
+          throw new Error('Invalid email or password. Please check your credentials or sign up for an account.');
+        } else if (error.message.includes('Email not confirmed')) {
+          throw new Error('Please confirm your email address before logging in.');
+        } else {
+          throw new Error('Login failed. Please try again.');
+        }
+      }
       
-      const user: User = {
-        id: '1',
-        firstName: firstName || email.split('@')[0],
-        lastName: lastName || 'User',
-        email: email,
-        subscription: 'professional',
-        confidenceScore: 75
-      };
-      
-      setUser(user);
-      // Save to localStorage
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-      return Promise.resolve();
+      if (data.user) {
+        router.push('/dashboard');
+      }
     } catch (error) {
-      return Promise.reject(error);
+      console.error('Login failed:', error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    // Clear from localStorage
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+  const signup = async (email: string, password: string, fullName: string) => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Create profile in database
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: data.user.id,
+              email: data.user.email,
+              full_name: fullName,
+              subscription_tier: 'basic',
+              confidence_score: 0,
+            },
+          ]);
+
+        if (profileError) throw profileError;
+        
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error('Signup failed:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const value: AuthContextType = {
-    user,
-    login,
-    logout,
-    isLoading
+  const logout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setUser(null);
+      router.push('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      throw error;
+    }
   };
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
