@@ -1,10 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Filter, MapPin, Home, Star, Eye, Bed, Bath, Square, TrendingUp, ChevronDown } from 'lucide-react';
+import { Search, Filter, MapPin, Home, Star, Eye, Bed, Bath, Square, TrendingUp, ChevronDown, Heart } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/ui/header';
-
+import HoverCard from '@/components/ui/hover-card';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import Toast from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ListingsPage() {
   const [filters, setFilters] = useState({
@@ -16,6 +19,10 @@ export default function ListingsPage() {
   });
 
   const [showFilters, setShowFilters] = useState(false);
+  const [favorites, setFavorites] = useState<number[]>([1, 3]);
+  const [loadingProperties, setLoadingProperties] = useState<number[]>([]);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
 
   const properties = [
     {
@@ -131,11 +138,41 @@ export default function ListingsPage() {
   const cities = ['All Cities', 'Austin', 'Dallas', 'Houston', 'San Antonio'];
   const propertyTypes = ['All Types', 'Single Family', 'Duplex', 'Triplex', 'Fourplex'];
 
+  const toggleFavorite = async (propertyId: number) => {
+    setLoadingProperties(prev => [...prev, propertyId]);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    setFavorites(prev => 
+      prev.includes(propertyId) 
+        ? prev.filter(id => id !== propertyId)
+        : [...prev, propertyId]
+    );
+    
+    const action = favorites.includes(propertyId) ? 'removed from' : 'added to';
+    showToast(`Property ${action} favorites`, 'success');
+    setLoadingProperties(prev => prev.filter(id => id !== propertyId));
+  };
+
+  const handleLoadMore = async () => {
+    setLoadingMore(true);
+    // Simulate loading more properties
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setLoadingMore(false);
+    showToast('More properties loaded!', 'success');
+  };
+
+  const handleQuickAnalyze = (propertyAddress: string) => {
+    showToast(`Opening analysis for ${propertyAddress}`, 'info');
+  };
+
+  const filteredProviders = properties; // Simplified for this example
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <Header />
-
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -144,7 +181,7 @@ export default function ListingsPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
+        <HoverCard className="bg-white rounded-2xl p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -152,14 +189,14 @@ export default function ListingsPage() {
               <input
                 type="text"
                 placeholder="Search by address, city, or ZIP code..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               />
             </div>
             
             {/* Filter Toggle */}
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center"
+              className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center bg-white hover:bg-gray-50"
             >
               <Filter className="w-5 h-5 mr-2" />
               Filters
@@ -168,7 +205,7 @@ export default function ListingsPage() {
             
             {/* Sort Dropdown */}
             <div className="relative">
-              <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white">
+              <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white transition-colors">
                 <option>Sort by: Newest</option>
                 <option>Sort by: Price Low-High</option>
                 <option>Sort by: Price High-Low</option>
@@ -181,12 +218,12 @@ export default function ListingsPage() {
 
           {/* Expanded Filters */}
           {showFilters && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="mt-6 pt-6 border-t border-gray-200 animate-in fade-in">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* City Filter */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                     {cities.map(city => (
                       <option key={city}>{city}</option>
                     ))}
@@ -196,7 +233,7 @@ export default function ListingsPage() {
                 {/* Property Type */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                     {propertyTypes.map(type => (
                       <option key={type}>{type}</option>
                     ))}
@@ -210,12 +247,12 @@ export default function ListingsPage() {
                     <input
                       type="number"
                       placeholder="Min"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     />
                     <input
                       type="number"
                       placeholder="Max"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -230,7 +267,7 @@ export default function ListingsPage() {
                       max="15"
                       value={filters.capRate}
                       onChange={(e) => setFilters({...filters, capRate: parseInt(e.target.value)})}
-                      className="flex-1"
+                      className="flex-1 transition-colors"
                     />
                     <span className="text-sm font-semibold">{filters.capRate}%</span>
                   </div>
@@ -244,13 +281,13 @@ export default function ListingsPage() {
             {['Austin', 'Dallas', 'Houston', 'San Antonio', 'Duplex', 'Single Family', 'BRRRR Ready', 'Deal Coach Approved', 'Under $500K', 'Cash Flow > $1K'].map(tag => (
               <button
                 key={tag}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition"
+                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors hover:scale-105 transform"
               >
                 {tag}
               </button>
             ))}
           </div>
-        </div>
+        </HoverCard>
 
         {/* Results Summary */}
         <div className="flex items-center justify-between mb-6">
@@ -258,22 +295,22 @@ export default function ListingsPage() {
             Showing <span className="font-semibold">{properties.length}</span> properties in Texas
           </p>
           <div className="flex items-center space-x-4">
-            <button className="flex items-center text-gray-600 hover:text-gray-800">
+            <button className="flex items-center text-gray-600 hover:text-gray-800 transition-colors">
               <MapPin className="w-4 h-4 mr-1" />
               Map View
             </button>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-600">View:</span>
-              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">Grid</button>
-              <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300">List</button>
+              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm transition-colors">Grid</button>
+              <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 transition-colors">List</button>
             </div>
           </div>
         </div>
 
         {/* Properties Grid */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {properties.map(property => (
-            <div key={property.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition duration-300">
+          {filteredProviders.map(property => (
+            <HoverCard key={property.id} className="bg-white rounded-2xl overflow-hidden">
               {/* Property Image/Header */}
               <div className="relative">
                 <div className="bg-gradient-to-br from-blue-100 to-green-100 h-48 flex items-center justify-center">
@@ -294,8 +331,20 @@ export default function ListingsPage() {
                 </div>
 
                 {/* Favorite Button */}
-                <button className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition">
-                  <Star className={`w-4 h-4 ${property.favorite ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`} />
+                <button 
+                  onClick={() => toggleFavorite(property.id)}
+                  disabled={loadingProperties.includes(property.id)}
+                  className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all disabled:opacity-50"
+                >
+                  {loadingProperties.includes(property.id) ? (
+                    <LoadingSpinner size="sm" />
+                  ) : (
+                    <Heart className={`w-4 h-4 transition-colors ${
+                      favorites.includes(property.id) 
+                        ? 'text-red-500 fill-red-500' 
+                        : 'text-gray-400 hover:text-red-400'
+                    }`} />
+                  )}
                 </button>
 
                 {/* Views Counter */}
@@ -316,7 +365,7 @@ export default function ListingsPage() {
                 </div>
 
                 {/* Address */}
-                <h3 className="font-bold text-lg mb-3 hover:text-blue-600 cursor-pointer">{property.address}</h3>
+                <h3 className="font-bold text-lg mb-3 hover:text-blue-600 cursor-pointer transition-colors">{property.address}</h3>
 
                 {/* Price */}
                 <div className="text-2xl font-bold text-blue-600 mb-4">
@@ -351,7 +400,7 @@ export default function ListingsPage() {
                 <div className="border-t pt-4 space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Est. Monthly Rent</span>
-                    <span className="font-semibold">${property.rent.toLocaleString()}/mo</span>
+                    <span className="font-semibold">${property.rent}/mo</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Est. Cash Flow</span>
@@ -363,25 +412,36 @@ export default function ListingsPage() {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-3 mt-6">
-                  <Link 
-                    href={`/analysis?property=${property.id}`}
-                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold text-center"
+                  <button 
+                    onClick={() => handleQuickAnalyze(property.address)}
+                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-center"
                   >
                     Analyze Deal
-                  </Link>
-                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition">
+                  </button>
+                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors hover:bg-gray-50">
                     <Eye className="w-5 h-5" />
                   </button>
                 </div>
               </div>
-            </div>
+            </HoverCard>
           ))}
         </div>
 
         {/* Load More */}
         <div className="text-center mt-12">
-          <button className="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 transition font-semibold">
-            Load More Properties
+          <button 
+            onClick={handleLoadMore}
+            disabled={loadingMore}
+            className="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
+          >
+            {loadingMore ? (
+              <>
+                <LoadingSpinner size="sm" className="mr-2" />
+                Loading Properties...
+              </>
+            ) : (
+              'Load More Properties'
+            )}
           </button>
         </div>
 
@@ -395,14 +455,22 @@ export default function ListingsPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
             />
-            <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+            <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
               Get Early Access
             </button>
           </div>
         </div>
       </div>
+
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
     </div>
   );
 }

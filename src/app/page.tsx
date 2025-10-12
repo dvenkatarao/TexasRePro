@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
+import Header from '@/components/ui/header';
+
 
 // Clock icon component
 const Clock = ({ className }: { className?: string }) => (
@@ -74,26 +76,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <Home className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-xl">TexasRE Pro</span>
-              <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full">TEXAS ONLY</span>
-            </div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/listings" className="text-gray-700 hover:text-blue-600 font-medium">Properties</Link>
-              <Link href="/analysis" className="text-gray-700 hover:text-blue-600 font-medium">Deal Analysis</Link>
-              <Link href="/education" className="text-gray-700 hover:text-blue-600 font-medium">Education</Link>
-              <Link href="/services" className="text-gray-700 hover:text-blue-600 font-medium">Services</Link>
-              <Link href="/auth/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Get Started</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
