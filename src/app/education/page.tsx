@@ -7,6 +7,8 @@ import {
   BarChart3, Calculator, Shield, MapPin, DollarSign, Building
 } from 'lucide-react';
 import Link from 'next/link';
+import Header from '@/components/ui/header';
+
 
 export default function EducationPage() {
   const [activeCategory, setActiveCategory] = useState('beginner');
@@ -216,34 +218,7 @@ export default function EducationPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <Home className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-xl">TexasRE Pro</span>
-            </Link>
-            
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/listings" className="text-gray-700 hover:text-blue-600 font-medium">Properties</Link>
-              <Link href="/analysis" className="text-gray-700 hover:text-blue-600 font-medium">Analysis</Link>
-              <Link href="/education" className="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Education</Link>
-              <Link href="/services" className="text-gray-700 hover:text-blue-600 font-medium">Services</Link>
-            </nav>
-            
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/dashboard"
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                Dashboard
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
