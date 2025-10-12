@@ -9,7 +9,8 @@ import {
 import { LineChart, Line, Area, AreaChart, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
 import Header from '@/components/ui/header';
-
+import { useAuth } from '@/contexts/auth-context';
+import ProtectedRoute from '@/components/auth/protected-route';
 
 // Helper components
 const UserIcon = ({ className }: { className?: string }) => (
@@ -21,6 +22,7 @@ const UserIcon = ({ className }: { className?: string }) => (
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [confidenceScore, setConfidenceScore] = useState(65);
+  const { user } = useAuth();
 
   const portfolioData = [
     { month: 'Jan', value: 450000, cashFlow: 2850 },
@@ -45,27 +47,28 @@ export default function Dashboard() {
   ];
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <Header />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Sarah! 👋</h1>
-          <p className="text-gray-600">Here&apos;s your Texas investment overview</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Welcome back, {user?.firstName || 'Investor'}! 👋
+          </h1>
+          <p className="text-gray-600">Here's your Texas investment overview</p>
         </div>
 
         {/* Confidence Score */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Your Investor Confidence</h2>
-            <span className="text-blue-600 font-semibold">{confidenceScore}%</span>
+            <span className="text-blue-600 font-semibold">{user?.confidenceScore || confidenceScore}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
             <div 
               className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-1000"
-              style={{ width: `${confidenceScore}%` }}
+              style={{ width: `${user?.confidenceScore || confidenceScore}%` }}
             />
           </div>
           <p className="text-sm text-gray-600">
@@ -115,6 +118,7 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Rest of your dashboard content remains the same */}
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Portfolio Chart */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6">
@@ -188,5 +192,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

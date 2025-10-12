@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/ui/header';
+import ProtectedRoute from '@/components/auth/protected-route';
 
 
 export default function ServicesPage() {
@@ -178,6 +179,7 @@ export default function ServicesPage() {
   };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <Header />
@@ -585,5 +587,7 @@ export default function ServicesPage() {
         </div>
       )}
     </div>
+    </ProtectedRoute>
+
   );
 }

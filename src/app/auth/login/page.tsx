@@ -1,8 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, Shield } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/auth-context';
+import { useToast } from '@/hooks/use-toast';
+import Toast from '@/components/ui/toast';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +16,27 @@ export default function LoginPage() {
     password: '',
     rememberMe: false
   });
+
+  const { login, isLoading } = useAuth();
+  const { toast, showToast, hideToast } = useToast();
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      await login(formData.email, formData.password);
+      showToast('Successfully signed in! Redirecting...', 'success');
+      
+      // Redirect to dashboard after a short delay
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
+      
+    } catch (error) {
+      showToast('Invalid email or password', 'error');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
@@ -29,7 +55,7 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
@@ -42,6 +68,8 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="investor@example.com"
+                  required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -58,11 +86,14 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your password"
+                  required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -76,6 +107,7 @@ export default function LoginPage() {
                   checked={formData.rememberMe}
                   onChange={(e) => setFormData({...formData, rememberMe: e.target.checked})}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  disabled={isLoading}
                 />
                 <span className="ml-2 text-sm text-gray-700">Remember me</span>
               </label>
@@ -86,10 +118,20 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
+              disabled={isLoading}
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign in to Dashboard
-              <ArrowRight className="ml-2 w-5 h-5" />
+              {isLoading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  Sign in to Dashboard
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </>
+              )}
             </button>
           </form>
 
@@ -109,6 +151,14 @@ export default function LoginPage() {
           <span>Bank-level security & encryption</span>
         </div>
       </div>
+
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
     </div>
   );
 }

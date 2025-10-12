@@ -8,6 +8,8 @@ import HoverCard from '@/components/ui/hover-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Toast from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
+import { useFavorites } from '@/contexts/favorites-context';
+import ProtectedRoute from '@/components/auth/protected-route';
 
 export default function ListingsPage() {
   const [filters, setFilters] = useState({
@@ -19,10 +21,10 @@ export default function ListingsPage() {
   });
 
   const [showFilters, setShowFilters] = useState(false);
-  const [favorites, setFavorites] = useState<number[]>([1, 3]);
   const [loadingProperties, setLoadingProperties] = useState<number[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const { toast, showToast, hideToast } = useToast();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
 
   const properties = [
     {
@@ -138,17 +140,13 @@ export default function ListingsPage() {
   const cities = ['All Cities', 'Austin', 'Dallas', 'Houston', 'San Antonio'];
   const propertyTypes = ['All Types', 'Single Family', 'Duplex', 'Triplex', 'Fourplex'];
 
-  const toggleFavorite = async (propertyId: number) => {
+  const handleToggleFavorite = async (propertyId: number) => {
     setLoadingProperties(prev => [...prev, propertyId]);
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 600));
     
-    setFavorites(prev => 
-      prev.includes(propertyId) 
-        ? prev.filter(id => id !== propertyId)
-        : [...prev, propertyId]
-    );
+    toggleFavorite(propertyId);
     
     const action = favorites.includes(propertyId) ? 'removed from' : 'added to';
     showToast(`Property ${action} favorites`, 'success');
@@ -170,9 +168,9 @@ export default function ListingsPage() {
   const filteredProviders = properties; // Simplified for this example
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -332,7 +330,7 @@ export default function ListingsPage() {
 
                 {/* Favorite Button */}
                 <button 
-                  onClick={() => toggleFavorite(property.id)}
+                  onClick={() => handleToggleFavorite(property.id)}
                   disabled={loadingProperties.includes(property.id)}
                   className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all disabled:opacity-50"
                 >
@@ -340,7 +338,7 @@ export default function ListingsPage() {
                     <LoadingSpinner size="sm" />
                   ) : (
                     <Heart className={`w-4 h-4 transition-colors ${
-                      favorites.includes(property.id) 
+                      isFavorite(property.id) 
                         ? 'text-red-500 fill-red-500' 
                         : 'text-gray-400 hover:text-red-400'
                     }`} />
@@ -472,5 +470,6 @@ export default function ListingsPage() {
         onClose={hideToast}
       />
     </div>
+    </ProtectedRoute>
   );
 }

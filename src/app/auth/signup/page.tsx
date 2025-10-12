@@ -1,8 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Home, Shield, Check } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/auth-context';
+import { useToast } from '@/hooks/use-toast';
+import Toast from '@/components/ui/toast';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,11 +21,33 @@ export default function SignupPage() {
     agreeToTerms: false
   });
 
+  const { login, isLoading } = useAuth();
+  const { toast, showToast, hideToast } = useToast();
+  const router = useRouter();
+
   const investorTypes = [
     { value: 'beginner', label: 'First-Time Investor', description: 'New to real estate investing' },
     { value: 'experienced', label: 'Experienced Investor', description: 'Own 1-5 properties' },
     { value: 'advanced', label: 'Advanced Investor', description: 'Own 6+ properties' },
   ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Use login function to authenticate (for demo purposes)
+      await login(formData.email, formData.password, formData.firstName, formData.lastName);
+      showToast('Account created successfully! Redirecting...', 'success');
+      
+      // Redirect to dashboard after a short delay
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
+      
+    } catch (error) {
+      showToast('Error creating account', 'error');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
@@ -39,7 +66,7 @@ export default function SignupPage() {
 
         {/* Signup Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Name Fields */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -54,6 +81,8 @@ export default function SignupPage() {
                     onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="John"
+                    required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -70,6 +99,8 @@ export default function SignupPage() {
                     onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Doe"
+                    required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -88,6 +119,8 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="investor@example.com"
+                  required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -105,11 +138,14 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Create a strong password"
+                  required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -131,6 +167,7 @@ export default function SignupPage() {
                       checked={formData.investorType === type.value}
                       onChange={(e) => setFormData({...formData, investorType: e.target.value})}
                       className="text-blue-600 border-gray-300 focus:ring-blue-500"
+                      disabled={isLoading}
                     />
                     <div className="ml-3">
                       <div className="font-medium text-gray-900">{type.label}</div>
@@ -148,6 +185,8 @@ export default function SignupPage() {
                 checked={formData.agreeToTerms}
                 onChange={(e) => setFormData({...formData, agreeToTerms: e.target.checked})}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1"
+                required
+                disabled={isLoading}
               />
               <label className="ml-2 text-sm text-gray-700">
                 I agree to the{' '}
@@ -159,10 +198,20 @@ export default function SignupPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
+              disabled={isLoading}
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Start 14-Day Free Trial
-              <ArrowRight className="ml-2 w-5 h-5" />
+              {isLoading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  Start 14-Day Free Trial
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </>
+              )}
             </button>
           </form>
 
@@ -192,6 +241,14 @@ export default function SignupPage() {
           </div>
         </div>
       </div>
+
+      {/* Toast Notifications */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
     </div>
   );
 }

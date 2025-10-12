@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/ui/header';
+import ProtectedRoute from '@/components/auth/protected-route';
 
 
 export default function EducationPage() {
@@ -216,6 +217,8 @@ export default function EducationPage() {
   const currentPath = learningPaths[activeCategory as keyof typeof learningPaths];
 
   return (
+    <ProtectedRoute>
+
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <Header />
@@ -486,5 +489,7 @@ export default function EducationPage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
+
   );
 }

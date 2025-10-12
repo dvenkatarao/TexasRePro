@@ -13,6 +13,7 @@ import HoverCard from '@/components/ui/hover-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Toast from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
+import ProtectedRoute from '@/components/auth/protected-route';
 
 export default function AnalysisPage() {
   const [activeTab, setActiveTab] = useState('calculator');
@@ -177,6 +178,7 @@ export default function AnalysisPage() {
   };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
       <Header />
 
@@ -644,5 +646,7 @@ export default function AnalysisPage() {
         onClose={hideToast}
       />
     </div>
+    </ProtectedRoute>
+
   );
 }
