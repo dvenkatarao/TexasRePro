@@ -17,6 +17,7 @@ export default function LoginPage() {
     rememberMe: false
   });
 
+  const [error, setError] = useState(''); // Add this line
   const { login, isLoading } = useAuth();
   const { toast, showToast, hideToast } = useToast();
   const router = useRouter();
@@ -29,8 +30,8 @@ export default function LoginPage() {
       showToast('Successfully signed in! Redirecting...', 'success');
       router.push('/dashboard');
       
-    } catch (error) {
-      showToast('Invalid email or password', 'error');
+    } catch (error: any) {
+      setError(error.message || 'Login failed. Please try again.');
     }
   };
 

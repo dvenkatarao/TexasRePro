@@ -33,21 +33,24 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.agreeToTerms) {
       showToast('Please agree to the terms and conditions', 'error');
       return;
     }
-
+    
     try {
-      // Use login function to authenticate (for demo purposes)
-      await signup(formData.email, formData.password, formData.firstName, formData.lastName);
+      await signup(formData.email, formData.password, formData.firstName, formData.lastName, formData.investorType);
       showToast('Account created successfully! Redirecting...', 'success');
       
-      router.push('/dashboard');
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
       
-    } catch (error) {
-      showToast('Error creating account', 'error');
+    } catch (err: any) {
+      console.error('Signup error:', err);
+      // Show the actual error message from Supabase
+      showToast(err.message || 'Error creating account. Please try again.', 'error');
     }
   };
 

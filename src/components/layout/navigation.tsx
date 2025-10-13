@@ -24,6 +24,7 @@ export default function Navigation() {
             <Link href="/analysis" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Analysis</Link>
             <Link href="/education" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Education</Link>
             <Link href="/services" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Services</Link>
+            <Link href="/settings" className="text-gray-700 hover:text-blue-600">Settings</Link>
           </nav>
           
           <div className="flex items-center space-x-4">

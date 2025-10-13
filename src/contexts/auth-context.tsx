@@ -8,21 +8,21 @@ interface User {
   id: string;
   email: string;
   name: string;
-  firstName?: string;    // Add this
-  lastName?: string;     // Add this
+  firstName?: string;
+  lastName?: string;
+  investorType?: 'beginner' | 'experienced' | 'advanced';
+  phoneNumber?: string;        // Add this
+  avatar_url?: string;          // Add this
   subscription: 'basic' | 'professional' | 'enterprise';
   confidenceScore: number;
-  full_name?: string;
-  avatar_url?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
+  signup: (email: string, password: string, firstName: string, lastName: string, investorType: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>; // Add this
-
   isLoading: boolean;
 }
 
@@ -78,10 +78,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser({
               id: profile.id,
               email: profile.email,
-              name: profile.full_name || profile.email.split('@')[0],
+              name: `${profile.first_name} ${profile.last_name}`,
+              firstName: profile.first_name,
+              lastName: profile.last_name,
+              investorType: profile.investor_type as any, // Add this
               subscription: profile.subscription_tier as any,
               confidenceScore: profile.confidence_score,
-              full_name: profile.full_name,
               avatar_url: profile.avatar_url
             });
           }
@@ -105,7 +107,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) {
         // Handle specific Supabase auth errors
-        if (error.message === 'Invalid login credentials') {
+        if (error.message === 'Email not confirmed') {
+          throw new Error('Please check your email and confirm your account before logging in.');}
+        else if (error.message === 'Invalid login credentials') {
           throw new Error('Invalid email or password. Please check your credentials or sign up for an account.');
         } else if (error.message.includes('Email not confirmed')) {
           throw new Error('Please confirm your email address before logging in.');
@@ -115,6 +119,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       if (data.user) {
+      // Check if email is confirmed and show appropriate message
+      if (!data.user.email_confirmed_at) {
+        // This shouldn't happen with the error handling above, but just in case
+        console.warn('User logged in but email not confirmed');
+      }        
         router.push('/dashboard');
       }
     } catch (error) {
@@ -125,7 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signup = async (email: string, password: string, fullName: string) => {
+  const signup = async (email: string, password: string, firstName: string, lastName: string, investorType: string) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -133,36 +142,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password,
         options: {
           data: {
-            full_name: fullName,
+            first_name: firstName,
+            last_name: lastName,
+            investor_type: investorType,
           },
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase auth error:', error);
+        throw new Error(error.message || 'Signup failed');
+      }
+
+      console.log('Auth signup successful, user:', data.user);
 
       if (data.user) {
-        // Create profile in database
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: data.user.id,
-              email: data.user.email,
-              full_name: fullName,
-              subscription_tier: 'basic',
-              confidence_score: 0,
-            },
-          ]);
-
-        if (profileError) throw profileError;
-        
+        // ✅ Profile is automatically created by the trigger
+        console.log('Profile will be auto-created by database trigger');
         router.push('/dashboard');
       }
     } catch (error) {
-      console.error('Signup failed:', error);
+      console.error('Signup process failed:', error);
       throw error;
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const resendConfirmationEmail = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+      });
+
+      if (error) throw error;
+      
+      // You can return a success message or handle it in the UI
+      return 'Confirmation email sent! Please check your inbox.';
+    } catch (error) {
+      console.error('Resend confirmation failed:', error);
+      throw error;
     }
   };
 
