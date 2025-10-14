@@ -159,8 +159,7 @@ export default function ProfilePage() {
                   </div>
                   <Link
                     href="/upgrade"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
-                    legacyBehavior>
+                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
                     Upgrade Plan
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>

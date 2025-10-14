@@ -38,8 +38,7 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
                 key={item.name}
                 href={item.href}
                 className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2"
-                onClick={onClose}
-                legacyBehavior>
+                onClick={onClose}>
                 {item.name}
               </Link>
             ))}

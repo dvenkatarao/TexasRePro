@@ -36,8 +36,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <Link
       href={`/properties/${property.id}`}
-      className="block no-underline"
-      legacyBehavior>
+      className="block no-underline">
       <Card className="hover:shadow-lg transition-shadow cursor-pointer">
         <CardContent className="p-0">
           <div className="aspect-video relative">

@@ -13,8 +13,6 @@ import Link from 'next/link';
 import Header from '@/components/ui/header';
 import { ThemeToggle } from '@/components/theme-toggle';
 
-
-
 // Clock icon component
 const Clock = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +27,6 @@ const UserIcon = ({ className }: { className?: string }) => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
   </svg>
 );
-
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -80,6 +77,7 @@ export default function HomePage() {
       {/* Header */}
       <ThemeToggle />
       <Header />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
         <div className="absolute inset-0 opacity-10">
@@ -101,13 +99,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/auth/signup"
-                className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition flex items-center"
-                legacyBehavior>
+                className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition flex items-center gap-2"
+              >
                 Start Free Trial
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition flex items-center">
-                <Play className="mr-2 w-5 h-5" />
+              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition flex items-center gap-2">
+                <Play className="w-5 h-5" />
                 Watch Demo
               </button>
             </div>
@@ -132,7 +130,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Rest of your original landing page content */}
+
       {/* Confidence Builder Section */}
       <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -210,10 +208,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Continue with the rest of your original sections... */}
-      {/* Subscription Tiers, Property Listings Preview, Deal Analysis Calculator, etc. */}
-      {/* I've included the first two sections to show the pattern */}
-      {/* You can continue adding the remaining sections from your original file */}
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -230,28 +225,44 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><Link href="/properties" className="hover:text-white">Properties</Link></li>
-                <li><Link href="/analysis" className="hover:text-white">Deal Analysis</Link></li>
-                <li><Link href="/education" className="hover:text-white">Education</Link></li>
-                <li><Link href="/services" className="hover:text-white">Services</Link></li>
+                <li>
+                  <Link href="/properties" className="hover:text-white transition-colors">
+                    Properties
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/analysis" className="hover:text-white transition-colors">
+                    Deal Analysis
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/education" className="hover:text-white transition-colors">
+                    Education
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services" className="hover:text-white transition-colors">
+                    Services
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white">About Us</a></li>
-                <li><a href="#" className="hover:text-white">Pricing</a></li>
-                <li><a href="#" className="hover:text-white">Success Stories</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white">Fair Housing</a></li>
-                <li><a href="#" className="hover:text-white">TREC Info</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Fair Housing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">TREC Info</a></li>
               </ul>
             </div>
           </div>

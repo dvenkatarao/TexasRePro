@@ -82,8 +82,7 @@ export default function UpgradePage() {
             </ul>
             <Link
               href="/dashboard?upgrade=professional"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
-              legacyBehavior>
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center">
               Upgrade to Professional
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
@@ -112,8 +111,7 @@ export default function UpgradePage() {
             </ul>
             <Link
               href="/dashboard?upgrade=enterprise"
-              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold flex items-center justify-center"
-              legacyBehavior>
+              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold flex items-center justify-center">
               Upgrade to Enterprise
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>

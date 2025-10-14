@@ -148,8 +148,7 @@ export default function Dashboard() {
                     <Link
                       key={index}
                       href={action.href}
-                      className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition group"
-                      legacyBehavior>
+                      className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition group">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center mr-3 ${
                         action.color === 'blue' ? 'bg-blue-100' :
                         action.color === 'green' ? 'bg-green-100' :

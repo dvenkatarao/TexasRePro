@@ -19,7 +19,6 @@ export default function Header() {
     { name: 'Education', href: '/education' },
     { name: 'Services', href: '/services' },
     { name: 'Favorites', href: '/favorites' },
-
   ];
 
   const handleLogout = () => {
@@ -52,22 +51,22 @@ export default function Header() {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3" legacyBehavior>
+          {/* Logo - FIXED: Removed legacyBehavior */}
+          <Link href="/" className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-xl">TexasRE Pro</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - FIXED: Removed legacyBehavior */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-                legacyBehavior>
+              >
                 {item.name}
               </Link>
             ))}
@@ -82,7 +81,7 @@ export default function Header() {
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                    {user.firstName.charAt(0)}
+                    {user.firstName?.charAt(0) || 'U'}
                   </div>
                   <span>{user.firstName}</span>
                 </button>
@@ -97,21 +96,21 @@ export default function Header() {
                     </div>
                     <Link
                       href="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       Dashboard
                     </Link>
                     <Link
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       Profile Settings
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out
@@ -146,7 +145,7 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - FIXED: Removed legacyBehavior */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
             <div className="px-4 py-6 space-y-4">
@@ -157,7 +156,7 @@ export default function Header() {
                   href={item.href}
                   className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  legacyBehavior>
+                >
                   {item.name}
                 </Link>
               ))}
