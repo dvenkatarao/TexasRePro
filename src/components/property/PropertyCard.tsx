@@ -12,11 +12,11 @@ interface PropertyCardProps {
     price: number;
     bedrooms: number;
     bathrooms: number;
-    squareFeet: number;
-    image: string;
+    square_feet: number;
+    images: string;
     texasData: {
       county: string;
-      propertyTaxRate: number;
+      property_tax_rate: number;
     };
   };
 }
@@ -28,7 +28,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
         <CardContent className="p-0">
           <div className="aspect-video relative">
             <img
-              src={property.image}
+              src={property.images}
               alt={property.address}
               className="w-full h-48 object-cover rounded-t-lg"
             />
@@ -46,8 +46,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
               </div>
             </div>
             <div className="text-sm text-gray-500">
-              <p>{property.texasData.county} • {property.squareFeet.toLocaleString()} sq ft</p>
-              <p>Tax Rate: {property.texasData.propertyTaxRate}%</p>
+              <p>{property.texasData.county} • {property.square_feet.toLocaleString()} sq ft</p>
+              <p>Tax Rate: {property.texasData.property_tax_rate}%</p>
             </div>
           </div>
         </CardContent>

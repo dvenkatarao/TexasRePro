@@ -1,7 +1,7 @@
 // app/properties/[id]/page.tsx
 import { notFound } from 'next/navigation';
 import PropertyDetailClient from './PropertyDetailClient';
-import { getPropertyById } from '@/lib/property-service';
+import { getPropertyById, getAllPropertyIds } from '@/lib/property-service';
 
 // This tells Next.js which paths to pre-render
 export async function generateStaticParams() {
