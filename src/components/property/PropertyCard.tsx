@@ -1,10 +1,10 @@
-// components/property/PropertyCard.tsx (completely flexible)
+// components/property/PropertyCard.tsx
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 interface PropertyCardProps {
-  property: any; // Use any to avoid type conflicts
+  property: any;
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
@@ -13,7 +13,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
     if (Array.isArray(property.images) && property.images.length > 0) return property.images[0];
     if (property.image) return property.image;
     if (property.images) return property.images; // Handle case where images might be a string
-    return '/placeholder-property.jpg';
+    return '/placeholder-property.jpg'; // JUST RETURN THE STRING URL, NO LINK COMPONENT
   };
 
   const getSquareFeet = () => {
@@ -42,7 +42,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const taxRate = getTaxRate();
 
   return (
-    <Link href={`/properties/${property.id}`}>
+    // THE LINK SHOULD WRAP THE ENTIRE CARD, NOT BE INSIDE getImage()
+    <Link href={`/properties/${property.id}`} className="block">
       <Card className="cursor-pointer hover:shadow-lg transition-shadow">
         <CardContent className="p-0">
           <div className="aspect-video relative">

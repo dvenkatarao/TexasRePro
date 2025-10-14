@@ -3,14 +3,12 @@ import { notFound } from 'next/navigation';
 import PropertyDetailClient from './PropertyDetailClient';
 import { getPropertyById, getAllPropertyIds } from '@/lib/property-service';
 
-// This tells Next.js which paths to pre-render
 export async function generateStaticParams() {
-  // In production, this would fetch from your database
-  const propertyIds = await getAllPropertyIds();
-  
-  return propertyIds.map((id) => ({
-    id: id,
-  }));
+  // This would come from your database in production
+  return [
+    { id: '1' },
+    { id: '2' },
+  ];
 }
 
 interface PropertyDetailPageProps {

@@ -2,11 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { Download, Heart, Share2, Calculator, School, MapPin, AlertTriangle } from 'lucide-react';
+import { Download, Heart, Share2, Calculator, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
 
 interface PropertyDetailClientProps {
   property: any;
@@ -15,20 +15,22 @@ interface PropertyDetailClientProps {
 export default function PropertyDetailClient({ property }: PropertyDetailClientProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const { showToast } = useToast(); // This returns { toast: { dispatch, ... } }
 
-  const TabButton = ({ id, label, icon }: { id: string; label: string; icon: React.ReactNode }) => (
-    <Button
-      variant={activeTab === id ? "default" : "outline"}
-      onClick={() => setActiveTab(id)}
-      className="flex items-center gap-2"
-    >
-      {icon}
-      {label}
-    </Button>
+  const handleSaveProperty = () => {
+  setIsSaved(!isSaved);
+  showToast(
+      isSaved ? 'Property removed from saved properties' : 'Property added to saved properties',
+      'success'
   );
+  };
 
-  // Calculate some basic financial metrics
-  const monthlyCashFlow = (property.estimated_rent || 0) - (property.price * 0.01); // Simplified
+    const handleDeepAnalysis = () => {
+    showToast(
+        `Deep analysis requested for ${property.address}`,
+        'info'
+    );
+    };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -42,8 +44,8 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
               {property.city}, {property.state} {property.zip_code}
             </p>
             <div className="flex items-center gap-4">
-              <Badge variant="secondary" className="text-lg px-4 py-1">
-                ${property.price.toLocaleString()}
+              <Badge className="text-lg px-4 py-1 bg-white text-blue-600">
+                ${property.price?.toLocaleString()}
               </Badge>
               <Badge variant="outline" className="text-white border-white">
                 {property.bedrooms} BD / {property.bathrooms} BA
@@ -58,11 +60,25 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <TabButton id="overview" label="Overview" icon={<MapPin className="w-4 h-4" />} />
-              <TabButton id="financials" label="Financials" icon={<Calculator className="w-4 h-4" />} />
+              <Button
+                variant={activeTab === 'overview' ? "default" : "outline"}
+                onClick={() => setActiveTab('overview')}
+                className="flex items-center gap-2"
+              >
+                <MapPin className="w-4 h-4" />
+                Overview
+              </Button>
+              <Button
+                variant={activeTab === 'financials' ? "default" : "outline"}
+                onClick={() => setActiveTab('financials')}
+                className="flex items-center gap-2"
+              >
+                <Calculator className="w-4 h-4" />
+                Financials
+              </Button>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" onClick={() => setIsSaved(!isSaved)}>
+              <Button variant="outline" onClick={handleSaveProperty}>
                 <Heart className={`w-4 h-4 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
               </Button>
               <Button onClick={() => window.print()} className="flex items-center gap-2">
@@ -99,12 +115,8 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                         <p className="font-semibold">{property.county || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">School District</p>
-                        <p className="font-semibold">{property.school_district || 'N/A'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">Tax Rate</p>
-                        <p className="font-semibold">{property.property_tax_rate || 'N/A'}%</p>
+                        <p className="text-sm text-gray-600">Year Built</p>
+                        <p className="font-semibold">{property.year_built || 'N/A'}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -143,18 +155,19 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <p className="text-2xl font-bold text-purple-600">
-                          ${monthlyCashFlow.toLocaleString()}
+                          {property.property_tax_rate ? `${property.property_tax_rate}%` : 'N/A'}
                         </p>
-                        <p className="text-sm text-gray-600">Est. Cash Flow</p>
+                        <p className="text-sm text-gray-600">Tax Rate</p>
                       </div>
                     </div>
                     
                     <div className="p-4 bg-blue-50 rounded-lg">
-                      <h4 className="font-semibold text-blue-800 mb-2">Texas Investment Considerations</h4>
+                      <h4 className="font-semibold text-blue-800 mb-2">Texas Investment Insights</h4>
                       <ul className="text-sm text-blue-700 space-y-1">
                         <li>• Property tax protest opportunities available</li>
                         <li>• No state income tax in Texas</li>
                         <li>• Landlord-friendly state laws</li>
+                        <li>• Strong rental market in {property.city}</li>
                       </ul>
                     </div>
                   </div>
@@ -172,7 +185,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
               <CardContent>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-600 mb-2">Good</div>
-                  <p className="text-sm text-green-700">Solid cash flow opportunity</p>
+                  <p className="text-sm text-green-700">Solid cash flow opportunity in {property.city}</p>
                 </div>
               </CardContent>
             </Card>
@@ -188,7 +201,11 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                 <Button variant="outline" className="w-full justify-start">
                   🏠 Get Pre-Approved
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={handleDeepAnalysis}
+                >
                   📊 Deep Analysis
                 </Button>
               </CardContent>
