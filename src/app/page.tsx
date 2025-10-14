@@ -232,7 +232,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><Link href="/listings" className="hover:text-white">Properties</Link></li>
+                <li><Link href="/properties" className="hover:text-white">Properties</Link></li>
                 <li><Link href="/analysis" className="hover:text-white">Deal Analysis</Link></li>
                 <li><Link href="/education" className="hover:text-white">Education</Link></li>
                 <li><Link href="/services" className="hover:text-white">Services</Link></li>

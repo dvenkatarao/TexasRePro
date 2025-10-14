@@ -42,7 +42,7 @@ export default function Dashboard() {
 
   const quickActions = [
     { title: 'Analyze New Deal', description: 'Run financial analysis', icon: Calculator, color: 'blue', href: '/analysis' },
-    { title: 'Find Properties', description: 'Browse vetted listings', icon: Search, color: 'green', href: '/listings' },
+    { title: 'Find Properties', description: 'Browse vetted listings', icon: Search, color: 'green', href: '/properties' },
     { title: 'Continue Learning', description: 'Texas investor course', icon: BookOpen, color: 'purple', href: '/education' },
     { title: 'Find Services', description: 'Connect with providers', icon: Users, color: 'orange', href: '/services' },
   ];

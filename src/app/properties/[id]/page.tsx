@@ -4,7 +4,6 @@ import PropertyDetailClient from './PropertyDetailClient';
 import { getPropertyById, getAllPropertyIds } from '@/lib/property-service';
 
 export async function generateStaticParams() {
-  // This would come from your database in production
   return [
     { id: '1' },
     { id: '2' },
@@ -12,13 +11,17 @@ export async function generateStaticParams() {
 }
 
 interface PropertyDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
-  const property = await getPropertyById(params.id);
+  const { id } = await params;
+  const property = await getPropertyById(id);
+
+  console.log('Property data received in detail page:', property);
+  console.log('Available fields:', Object.keys(property || {}));
 
   if (!property) {
     notFound();
@@ -27,9 +30,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   return <PropertyDetailClient property={property} />;
 }
 
-// Optional: Generate metadata for each property
 export async function generateMetadata({ params }: PropertyDetailPageProps) {
-  const property = await getPropertyById(params.id);
+  const { id } = await params;
+  const property = await getPropertyById(id);
   
   if (!property) {
     return {

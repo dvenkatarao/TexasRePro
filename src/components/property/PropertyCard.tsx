@@ -12,28 +12,20 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const getImage = () => {
     if (Array.isArray(property.images) && property.images.length > 0) return property.images[0];
     if (property.image) return property.image;
-    if (property.images) return property.images; // Handle case where images might be a string
-    return '/placeholder-property.jpg'; // JUST RETURN THE STRING URL, NO LINK COMPONENT
+    if (property.images) return property.images;
+    return '/placeholder-property.jpg';
   };
 
   const getSquareFeet = () => {
-    return property.square_feet || property.squareFeet || property.square_footage || 0;
+    return property.square_feet || property.squareFeet || 0;
   };
 
   const getCounty = () => {
-    return property.county || 
-           property.texasData?.county || 
-           property.texas_data?.county || 
-           'N/A';
+    return property.texasData?.county || property.county || 'N/A';
   };
 
   const getTaxRate = () => {
-    return property.property_tax_rate || 
-           property.tax_rate ||
-           property.texasData?.property_tax_rate ||
-           property.texasData?.propertyTaxRate ||
-           property.texas_data?.property_tax_rate ||
-           'N/A';
+    return property.texasData?.property_tax_rate || 'N/A';
   };
 
   const imageUrl = getImage();
@@ -42,9 +34,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const taxRate = getTaxRate();
 
   return (
-    // THE LINK SHOULD WRAP THE ENTIRE CARD, NOT BE INSIDE getImage()
-    <Link href={`/properties/${property.id}`} className="block">
-      <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+    <Link 
+      href={`/properties/${property.id}`}
+      className="block no-underline"
+    >
+      <Card className="hover:shadow-lg transition-shadow cursor-pointer">
         <CardContent className="p-0">
           <div className="aspect-video relative">
             <img
@@ -56,7 +50,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-2">{property.address || 'Address not available'}</h3>
             <p className="text-gray-600 mb-2">
-              {property.city || ''}, {property.state || ''}
+              {property.city || ''}, {property.state || ''} {property.zipCode || ''}
             </p>
             <div className="flex items-center justify-between mb-3">
               <span className="text-xl font-bold">

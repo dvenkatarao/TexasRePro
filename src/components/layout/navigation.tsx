@@ -20,7 +20,7 @@ export default function Navigation() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/listings" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Properties</Link>
+            <Link href="/properties" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Properties</Link>
             <Link href="/analysis" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Analysis</Link>
             <Link href="/education" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Education</Link>
             <Link href="/services" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">Services</Link>

@@ -24,7 +24,7 @@ export default function FavoritesPage() {
                 Start exploring Texas investment properties and save your favorites to compare and analyze later.
               </p>
               <Link
-                href="/listings"
+                href="/properties"
                 className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
               >
                 Browse Properties
@@ -52,7 +52,7 @@ export default function FavoritesPage() {
               </div>
               <div className="flex items-center space-x-4">
                 <Link
-                  href="/listings"
+                  href="/properties"
                   className="text-blue-600 hover:text-blue-700 font-semibold"
                 >
                   Browse More

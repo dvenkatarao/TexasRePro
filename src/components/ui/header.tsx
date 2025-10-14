@@ -14,7 +14,7 @@ export default function Header() {
   const router = useRouter();
 
   const navigation = [
-    { name: 'Properties', href: '/listings' },
+    { name: 'Properties', href: '/properties' },
     { name: 'Deal Analysis', href: '/analysis' },
     { name: 'Education', href: '/education' },
     { name: 'Services', href: '/services' },
