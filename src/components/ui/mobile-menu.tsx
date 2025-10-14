@@ -18,7 +18,6 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
     <div className="fixed inset-0 z-50 md:hidden">
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      
       {/* Menu Panel */}
       <div className="relative bg-white w-80 max-w-full h-full ml-auto shadow-xl">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -40,7 +39,7 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
                 href={item.href}
                 className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2"
                 onClick={onClose}
-              >
+                legacyBehavior>
                 {item.name}
               </Link>
             ))}

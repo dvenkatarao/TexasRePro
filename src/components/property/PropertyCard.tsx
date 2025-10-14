@@ -34,10 +34,10 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const taxRate = getTaxRate();
 
   return (
-    <Link 
+    <Link
       href={`/properties/${property.id}`}
       className="block no-underline"
-    >
+      legacyBehavior>
       <Card className="hover:shadow-lg transition-shadow cursor-pointer">
         <CardContent className="p-0">
           <div className="aspect-video relative">

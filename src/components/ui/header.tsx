@@ -53,7 +53,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3" legacyBehavior>
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
@@ -67,7 +67,7 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-              >
+                legacyBehavior>
                 {item.name}
               </Link>
             ))}
@@ -157,7 +157,7 @@ export default function Header() {
                   href={item.href}
                   className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
-                >
+                  legacyBehavior>
                   {item.name}
                 </Link>
               ))}

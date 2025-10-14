@@ -38,7 +38,6 @@ export default function UpgradePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full mb-4">
@@ -84,7 +83,7 @@ export default function UpgradePage() {
             <Link
               href="/dashboard?upgrade=professional"
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
-            >
+              legacyBehavior>
               Upgrade to Professional
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
@@ -114,7 +113,7 @@ export default function UpgradePage() {
             <Link
               href="/dashboard?upgrade=enterprise"
               className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold flex items-center justify-center"
-            >
+              legacyBehavior>
               Upgrade to Enterprise
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>

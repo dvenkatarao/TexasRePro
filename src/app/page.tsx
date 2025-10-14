@@ -80,7 +80,6 @@ export default function HomePage() {
       {/* Header */}
       <ThemeToggle />
       <Header />
-
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
         <div className="absolute inset-0 opacity-10">
@@ -100,7 +99,10 @@ export default function HomePage() {
               From your first property to your entire portfolio — we guide you every step.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/auth/signup" className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition flex items-center">
+              <Link
+                href="/auth/signup"
+                className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition flex items-center"
+                legacyBehavior>
                 Start Free Trial
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
@@ -130,7 +132,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Rest of your original landing page content */}
       {/* Confidence Builder Section */}
       <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
@@ -209,13 +210,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Continue with the rest of your original sections... */}
       {/* Subscription Tiers, Property Listings Preview, Deal Analysis Calculator, etc. */}
-      
       {/* I've included the first two sections to show the pattern */}
       {/* You can continue adding the remaining sections from your original file */}
-
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
