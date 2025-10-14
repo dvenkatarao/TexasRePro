@@ -2,7 +2,7 @@
 export interface TexasData {
   county: string;
   schoolDistrict: string;
-  propertyTaxRate: number;
+  property_tax_rate: number;
   taxAppraisal: number;
   floodZone: string;
   windstormInsurance: boolean;
@@ -129,10 +129,10 @@ export interface Property {
   price: number;
   bedrooms: number;
   bathrooms: number;
-  squareFeet: number;
+  square_feet: number;
   lotSize: number; // acres
   yearBuilt: number;
-  propertyType: 'Single Family' | 'Duplex' | 'Triplex' | 'Fourplex' | 'Townhouse';
+  property_type: 'Single Family' | 'Duplex' | 'Triplex' | 'Fourplex' | 'Townhouse';
   architectureStyle?: 'Texas Ranch' | 'Modern' | 'Traditional' | 'Spanish' | 'Victorian';
   description: string;
   images: string[];
@@ -209,10 +209,10 @@ export const mockProperties: Property[] = [
     price: 450000,
     bedrooms: 3,
     bathrooms: 2,
-    squareFeet: 1850,
+    square_feet: 1850,
     lotSize: 0.25,
     yearBuilt: 1995,
-    propertyType: 'Single Family',
+    property_type: 'Single Family',
     architectureStyle: 'Texas Ranch',
     description: 'Beautiful Texas ranch-style home in prime Austin location. Perfect for investment with strong rental demand. Features updated kitchen, hardwood floors, and large fenced yard. Located in highly sought-after Travis County with excellent school district.',
     images: ['/property1-1.jpg', '/property1-2.jpg', '/property1-3.jpg'],
@@ -221,7 +221,7 @@ export const mockProperties: Property[] = [
     texasData: {
       county: 'Travis County',
       schoolDistrict: 'Austin ISD',
-      propertyTaxRate: 2.1,
+      property_tax_rate: 2.1,
       taxAppraisal: 420000,
       floodZone: 'X',
       windstormInsurance: false,
@@ -469,10 +469,10 @@ export const mockProperties: Property[] = [
     price: 375000,
     bedrooms: 4,
     bathrooms: 3,
-    squareFeet: 2200,
+    square_feet: 2200,
     lotSize: 0.18,
     yearBuilt: 1988,
-    propertyType: 'Single Family',
+    property_type: 'Single Family',
     architectureStyle: 'Traditional',
     description: 'Spacious Dallas home in growing neighborhood. Great cash flow potential with recent updates and strong rental demand.',
     images: ['/property2-1.jpg', '/property2-2.jpg'],
@@ -480,7 +480,7 @@ export const mockProperties: Property[] = [
     texasData: {
       county: 'Dallas County',
       schoolDistrict: 'Dallas ISD',
-      propertyTaxRate: 2.35,
+      property_tax_rate: 2.35,
       taxAppraisal: 360000,
       floodZone: 'X',
       windstormInsurance: false,
@@ -662,7 +662,7 @@ export async function searchProperties(filters: {
     if (filters.bedrooms && property.bedrooms < filters.bedrooms) {
       return false;
     }
-    if (filters.propertyType && property.propertyType !== filters.propertyType) {
+    if (filters.propertyType && property.property_type !== filters.propertyType) {
       return false;
     }
     return true;
