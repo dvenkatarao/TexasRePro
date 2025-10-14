@@ -1,3 +1,4 @@
+// src/components/ui/header.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -13,7 +14,13 @@ export default function Header() {
   const { user, logout, isLoading } = useAuth();
   const router = useRouter();
 
-  const navigation = [
+  // Navigation based on authentication state
+  const publicNavigation = [
+    { name: 'Features', href: '/features' },
+    { name: 'Pricing', href: '/pricing' },
+  ];
+
+  const authenticatedNavigation = [
     { name: 'Properties', href: '/properties' },
     { name: 'Deal Analysis', href: '/analysis' },
     { name: 'Education', href: '/education' },
@@ -25,9 +32,12 @@ export default function Header() {
     logout();
     setIsUserMenuOpen(false);
     setIsMobileMenuOpen(false);
-    // Redirect to landing page after logout
     router.push('/');
   };
+
+  // Determine logo link based on auth state
+  const logoHref = user ? '/dashboard' : '/';
+  const currentNavigation = user ? authenticatedNavigation : publicNavigation;
 
   if (isLoading) {
     return (
@@ -51,17 +61,17 @@ export default function Header() {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo - FIXED: Removed legacyBehavior */}
-          <Link href="/" className="flex items-center space-x-3">
+          {/* Logo - Dynamic routing based on auth */}
+          <Link href={logoHref} className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-xl">TexasRE Pro</span>
           </Link>
 
-          {/* Desktop Navigation - FIXED: Removed legacyBehavior */}
+          {/* Desktop Navigation - Dynamic based on auth */}
           <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
+            {currentNavigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -72,53 +82,62 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Auth Section */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                    {user.firstName?.charAt(0) || 'U'}
-                  </div>
-                  <span>{user.firstName}</span>
-                </button>
+              // Authenticated User Menu
+              <div className="flex items-center space-x-4">
+                {/* Theme Toggle - Only show when authenticated */}
+                <div className="theme-toggle-container">
+                  {/* Your ThemeToggle component will go here */}
+                </div>
                 
-                {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                    <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
-                      {user.subscription} plan
+                <div className="relative">
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                      {user.firstName?.charAt(0) || 'U'}
                     </div>
-                    <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
-                      {user.firstName} {user.lastName}
+                    <span>{user.firstName}</span>
+                  </button>
+                  
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                      <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
+                        {user.subscription} plan
+                      </div>
+                      <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
+                        {user.firstName} {user.lastName}
+                      </div>
+                      <Link
+                        href="/dashboard"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        Profile Settings
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </button>
                     </div>
-                    <Link
-                      href="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
-                      Profile Settings
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Sign Out
-                    </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ) : (
+              // Public Auth Buttons
               <>
                 <Link
                   href="/auth/login"
@@ -130,7 +149,7 @@ export default function Header() {
                   href="/auth/signup"
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
                 >
-                  Start Free Trial
+                  Get Started
                 </Link>
               </>
             )}
@@ -145,12 +164,12 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation - FIXED: Removed legacyBehavior */}
+        {/* Mobile Navigation - Dynamic based on auth */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
             <div className="px-4 py-6 space-y-4">
               {/* Navigation Links */}
-              {navigation.map((item) => (
+              {currentNavigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
@@ -197,7 +216,7 @@ export default function Header() {
                       className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold text-center text-lg"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Start Free Trial
+                      Get Started
                     </Link>
                   </>
                 )}
