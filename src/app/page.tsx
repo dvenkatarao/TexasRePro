@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
+
 
 // Clock icon component
 const Clock = ({ className }: { className?: string }) => (
@@ -73,9 +73,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Header */}
-      <Header />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
         <div className="absolute inset-0 opacity-10">
@@ -102,10 +100,13 @@ export default function HomePage() {
                 Start Free Trial
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition flex items-center gap-2">
-                <Play className="w-5 h-5" />
-                Watch Demo
-              </button>
+              <Link
+                href="/auth/login"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition flex items-center gap-2"
+              >
+                Sign In
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </div>
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">

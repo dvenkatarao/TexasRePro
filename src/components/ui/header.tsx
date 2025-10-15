@@ -7,6 +7,8 @@ import { Home, Menu, X, User, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import LoadingSpinner from './loading-spinner';
+import ThemeToggle from '@/components/ui/theme-toggle';
+
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,6 +25,7 @@ export default function Header() {
   const authenticatedNavigation = [
     { name: 'Properties', href: '/properties' },
     { name: 'Deal Analysis', href: '/analysis' },
+    { name: 'Investment Reports', href: '/reports' }, // ← ADDED THIS LINE
     { name: 'Education', href: '/education' },
     { name: 'Services', href: '/services' },
     { name: 'Favorites', href: '/favorites' },
@@ -41,7 +44,7 @@ export default function Header() {
 
   if (isLoading) {
     return (
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
@@ -66,7 +69,7 @@ export default function Header() {
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl">TexasRE Pro</span>
+            <span className="font-bold text-xl text-gray-900 dark:text-white">TexasRE Pro</span>
           </Link>
 
           {/* Desktop Navigation - Dynamic based on auth */}
@@ -75,7 +78,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
               >
                 {item.name}
               </Link>
@@ -88,6 +91,7 @@ export default function Header() {
               // Authenticated User Menu
               <div className="flex items-center space-x-4">
                 {/* Theme Toggle - Only show when authenticated */}
+                <ThemeToggle />
                 <div className="theme-toggle-container">
                   {/* Your ThemeToggle component will go here */}
                 </div>
@@ -95,39 +99,39 @@ export default function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                    className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                      {user.firstName?.charAt(0) || 'U'}
+                      {user.firstName?.charAt(0) || user.name?.charAt(0) || 'U'}
                     </div>
-                    <span>{user.firstName}</span>
+                    <span>{user.firstName || user.name}</span>
                   </button>
                   
                   {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                      <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
+                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50 transition-colors">
+                      <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700 capitalize">
                         {user.subscription} plan
                       </div>
-                      <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
+                      <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-100 dark:border-gray-700">
                         {user.firstName} {user.lastName}
                       </div>
                       <Link
                         href="/dashboard"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
                         Dashboard
                       </Link>
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
                         Profile Settings
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center"
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center"
                       >
                         <LogOut className="w-4 h-4 mr-2" />
                         Sign Out
@@ -141,7 +145,7 @@ export default function Header() {
               <>
                 <Link
                   href="/auth/login"
-                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
                 >
                   Sign In
                 </Link>
@@ -166,14 +170,14 @@ export default function Header() {
 
         {/* Mobile Navigation - Dynamic based on auth */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg transition-colors">
             <div className="px-4 py-6 space-y-4">
               {/* Navigation Links */}
               {currentNavigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2 transition-colors"
+                  className="block text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -181,22 +185,22 @@ export default function Header() {
               ))}
               
               {/* Auth Section */}
-              <div className="pt-4 border-t border-gray-200 space-y-4">
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-4 transition-colors">
                 {user ? (
                   <>
-                    <div className="px-2 py-1 text-sm text-gray-500">
-                      Signed in as {user.firstName} {user.lastName}
+                    <div className="px-2 py-1 text-sm text-gray-500 dark:text-gray-400">
+                      Signed in as {user.firstName || user.name}
                     </div>
                     <Link
                       href="/dashboard"
-                      className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2 transition-colors"
+                      className="block text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left text-lg font-medium text-red-600 hover:text-red-700 py-2 transition-colors flex items-center"
+                      className="block w-full text-left text-lg font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 py-2 transition-colors flex items-center"
                     >
                       <LogOut className="w-5 h-5 mr-2" />
                       Sign Out
@@ -206,7 +210,7 @@ export default function Header() {
                   <>
                     <Link
                       href="/auth/login"
-                      className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2 transition-colors"
+                      className="block text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign In

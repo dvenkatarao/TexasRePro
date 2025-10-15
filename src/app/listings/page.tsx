@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Home, Star, Eye, Bed, Bath, Square, TrendingUp, ChevronDown, Heart } from 'lucide-react';
 import Link from 'next/link';
-import Navigation from '@/components/layout/navigation';
 import HoverCard from '@/components/ui/hover-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Toast from '@/components/ui/toast';
@@ -28,7 +27,7 @@ export default function ListingsPage() {
 
   const properties = [
     {
-      id: 1,
+      id: 'prop_abc123def456',
       address: '1234 Oak Street',
       city: 'Austin',
       price: 425000,
@@ -46,7 +45,7 @@ export default function ListingsPage() {
       cashFlow: 1250
     },
     {
-      id: 2,
+      id: 'prop_xyz789uvw012',
       address: '5678 Main Avenue',
       city: 'Dallas',
       price: 380000,
@@ -64,7 +63,7 @@ export default function ListingsPage() {
       cashFlow: 980
     },
     {
-      id: 3,
+      id: 'prop_pqr789uvw123',
       address: '910 Elm Street Duplex',
       city: 'Houston',
       price: 520000,
@@ -82,7 +81,7 @@ export default function ListingsPage() {
       cashFlow: 1850
     },
     {
-      id: 4,
+      id: 'prop_stu789uvw011',
       address: '2468 Pine Triplex',
       city: 'San Antonio',
       price: 675000,
@@ -100,7 +99,7 @@ export default function ListingsPage() {
       cashFlow: 2450
     },
     {
-      id: 5,
+      id: 'prop_vwx789uvw212',
       address: '1357 Cedar Fourplex',
       city: 'Austin',
       price: 890000,
@@ -118,7 +117,7 @@ export default function ListingsPage() {
       cashFlow: 3250
     },
     {
-      id: 6,
+      id: 'prop_yza789uvw122',
       address: '8642 Maple Single Family',
       city: 'Dallas',
       price: 345000,
@@ -140,7 +139,7 @@ export default function ListingsPage() {
   const cities = ['All Cities', 'Austin', 'Dallas', 'Houston', 'San Antonio'];
   const propertyTypes = ['All Types', 'Single Family', 'Duplex', 'Triplex', 'Fourplex'];
 
-  const handleToggleFavorite = async (propertyId: number) => {
+  const handleToggleFavorite = async (propertyId: string) => {
     setLoadingProperties(prev => [...prev, propertyId]);
     
     // Simulate API call
@@ -170,7 +169,7 @@ export default function ListingsPage() {
   return (
     <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

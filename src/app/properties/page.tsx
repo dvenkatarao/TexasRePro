@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, MapPin, ChevronDown } from 'lucide-react';
 import { PropertyCard } from '@/components/property/PropertyCard';
-import Navigation from '@/components/layout/navigation';
 import HoverCard from '@/components/ui/hover-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Toast from '@/components/ui/toast';
@@ -269,7 +268,7 @@ export default function PropertiesPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
-        <Navigation />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">

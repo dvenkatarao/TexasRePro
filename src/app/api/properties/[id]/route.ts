@@ -2,15 +2,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPropertyById } from '@/lib/property-service';
 
-interface Context {
-  params: {
+// Update the interface for Next.js 14 - params is now a Promise
+interface RouteContext {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, context: Context) {
+export async function GET(request: NextRequest, context: RouteContext) {
   try {
-    const { id } = context.params;
+    // Await the params promise to get the actual parameters
+    const { id } = await context.params;
+    
+    // Validate ID
+    if (!id) {
+      return NextResponse.json({ error: 'Property ID is required' }, { status: 400 });
+    }
+
     const property = await getPropertyById(id);
     
     if (!property) {

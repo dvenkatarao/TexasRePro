@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface FavoriteProperty {
-  id: number;
+  id: string;
   address: string;
   city: string;
   price: number;
@@ -22,12 +22,12 @@ interface FavoriteProperty {
 }
 
 interface FavoritesContextType {
-  favorites: number[];
+  favorites: string[];
   favoriteProperties: FavoriteProperty[];
-  toggleFavorite: (propertyId: number) => void;
-  isFavorite: (propertyId: number) => boolean;
+  toggleFavorite: (propertyId: string) => void;
+  isFavorite: (propertyId: string) => boolean;
   addToFavorites: (property: FavoriteProperty) => void;
-  removeFromFavorites: (propertyId: number) => void;
+  removeFromFavorites: (propertyId: string) => void;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -37,7 +37,7 @@ const FAVORITES_STORAGE_KEY = 'texasrepro-favorites';
 const FAVORITE_PROPERTIES_STORAGE_KEY = 'texasrepro-favorite-properties';
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [favoriteProperties, setFavoriteProperties] = useState<FavoriteProperty[]>([]);
 
   // Load favorites from localStorage on mount
@@ -64,7 +64,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     loadFavoritesFromStorage();
   }, []);
 
-  const toggleFavorite = (propertyId: number) => {
+  const toggleFavorite = (propertyId: string) => {
     setFavorites(prev => {
       const newFavorites = prev.includes(propertyId)
         ? prev.filter(id => id !== propertyId)
@@ -76,7 +76,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const isFavorite = (propertyId: number) => {
+  const isFavorite = (propertyId: string) => {
     return favorites.includes(propertyId);
   };
 
@@ -94,7 +94,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeFromFavorites = (propertyId: number) => {
+  const removeFromFavorites = (propertyId: string) => {
     setFavorites(prev => {
       const newFavorites = prev.filter(id => id !== propertyId);
       localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(newFavorites));

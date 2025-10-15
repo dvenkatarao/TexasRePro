@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, Shield } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, Shield, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
@@ -17,21 +17,22 @@ export default function LoginPage() {
     rememberMe: false
   });
 
-  const [error, setError] = useState(''); // Add this line
+  const [error, setError] = useState('');
   const { login, isLoading } = useAuth();
   const { toast, showToast, hideToast } = useToast();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(''); // Clear previous errors
 
     try {
       await login(formData.email, formData.password);
       showToast('Successfully signed in! Redirecting...', 'success');
-      router.push('/dashboard');
-      
+      // REMOVED: router.push('/dashboard'); - Auth context handles redirect
     } catch (error: any) {
       setError(error.message || 'Login failed. Please try again.');
+      showToast(error.message || 'Login failed. Please try again.', 'error');
     }
   };
 
@@ -112,6 +113,20 @@ export default function LoginPage() {
                 Forgot password?
               </a>
             </div>
+
+            {/* Error Display */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <XCircle className="h-5 w-5 text-red-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-red-700">{error}</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <button
               type="submit"

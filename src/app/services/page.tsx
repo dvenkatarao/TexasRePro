@@ -8,7 +8,6 @@ import {
   ChevronDown, MessageCircle, ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
-import Navigation from '@/components/layout/navigation';
 import ProtectedRoute from '@/components/auth/protected-route';
 
 
@@ -181,8 +180,6 @@ export default function ServicesPage() {
   return (
     <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <Navigation />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}

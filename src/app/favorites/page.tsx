@@ -3,7 +3,6 @@
 import React from 'react';
 import { Heart, MapPin, Bed, Bath, Square, TrendingUp, Eye, Calculator } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
 import ProtectedRoute from '@/components/auth/protected-route';
 import { useFavorites } from '@/contexts/favorites-context';
 import HoverCard from '@/components/ui/hover-card';
@@ -15,7 +14,6 @@ export default function FavoritesPage() {
     return (
       <ProtectedRoute>
         <div className="min-h-screen bg-gray-50">
-          <Header />
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
             <div className="bg-white rounded-2xl shadow-sm p-12">
               <Heart className="w-16 h-16 text-gray-300 mx-auto mb-6" />
@@ -39,7 +37,7 @@ export default function FavoritesPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        {/* <Header /> */}
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">

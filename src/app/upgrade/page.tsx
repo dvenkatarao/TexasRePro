@@ -3,7 +3,7 @@
 import React from 'react';
 import { Star, Check, Zap, Crown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
+//import Header from '@/components/ui/header';
 import { useAuth } from '@/contexts/auth-context';
 
 export default function UpgradePage() {
@@ -37,7 +37,7 @@ export default function UpgradePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* <Header /> */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full mb-4">
