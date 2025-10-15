@@ -11,7 +11,6 @@ import {
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
 
-
 // Clock icon component
 const Clock = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -72,8 +71,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
         <div className="absolute inset-0 opacity-10">
@@ -95,33 +93,33 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/auth/signup"
-                className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition flex items-center gap-2"
+                className="bg-card text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent transition flex items-center gap-2"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/auth/login"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition flex items-center gap-2"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-card hover:text-blue-900 transition flex items-center gap-2"
               >
                 Sign In
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="bg-card/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">$2.4B+</div>
                 <div className="text-sm text-blue-200">Properties Analyzed</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="bg-card/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">12,000+</div>
                 <div className="text-sm text-blue-200">Texas Investors</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="bg-card/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">85%</div>
                 <div className="text-sm text-blue-200">Deal Success Rate</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="bg-card/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">4.9★</div>
                 <div className="text-sm text-blue-200">Investor Rating</div>
               </div>
@@ -131,19 +129,19 @@ export default function HomePage() {
       </section>
 
       {/* Confidence Builder Section */}
-      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
+      <section className="py-16 bg-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-card rounded-2xl shadow-xl p-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Your Investment Confidence Journey</h2>
-              <p className="text-gray-600">We transform beginners into confident Texas real estate investors</p>
+              <h2 className="text-3xl font-bold text-card-foreground mb-4">Your Investment Confidence Journey</h2>
+              <p className="text-muted-foreground">We transform beginners into confident Texas real estate investors</p>
             </div>
             <div className="mb-8">
               <div className="flex justify-between mb-2">
-                <span className="text-sm font-semibold">Your Confidence Score</span>
-                <span className="text-sm font-semibold text-blue-600">{confidenceScore}%</span>
+                <span className="text-sm font-semibold text-card-foreground">Your Confidence Score</span>
+                <span className="text-sm font-semibold text-primary">{confidenceScore}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-4">
+              <div className="w-full bg-muted rounded-full h-4">
                 <div 
                   className="bg-gradient-to-r from-blue-500 to-green-500 h-4 rounded-full transition-all duration-1000"
                   style={{ width: `${confidenceScore}%` }}
@@ -151,53 +149,53 @@ export default function HomePage() {
               </div>
             </div>
             <div className="grid md:grid-cols-4 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4">
+              <div className="bg-accent dark:bg-blue-950 rounded-lg p-4">
                 <div className="flex items-center mb-2">
-                  <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
-                  <span className="font-semibold">Learn</span>
+                  <BookOpen className="w-5 h-5 text-primary dark:text-blue-400 mr-2" />
+                  <span className="font-semibold text-card-foreground">Learn</span>
                 </div>
-                <p className="text-sm text-gray-600">Texas-specific education modules</p>
+                <p className="text-sm text-muted-foreground">Texas-specific education modules</p>
                 <div className="mt-2">
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-600 dark:text-green-400">
                     <CheckCircle className="w-4 h-4 mr-1" />
                     <span className="text-xs">3 modules completed</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-green-50 rounded-lg p-4">
+              <div className="bg-accent dark:bg-green-950 rounded-lg p-4">
                 <div className="flex items-center mb-2">
-                  <Calculator className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="font-semibold">Analyze</span>
+                  <Calculator className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+                  <span className="font-semibold text-card-foreground">Analyze</span>
                 </div>
-                <p className="text-sm text-gray-600">Practice with real Texas deals</p>
+                <p className="text-sm text-muted-foreground">Practice with real Texas deals</p>
                 <div className="mt-2">
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-600 dark:text-green-400">
                     <CheckCircle className="w-4 h-4 mr-1" />
                     <span className="text-xs">5 deals analyzed</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-amber-50 rounded-lg p-4">
+              <div className="bg-amber-50 dark:bg-amber-950 rounded-lg p-4">
                 <div className="flex items-center mb-2">
-                  <Users className="w-5 h-5 text-amber-600 mr-2" />
-                  <span className="font-semibold">Connect</span>
+                  <Users className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
+                  <span className="font-semibold text-card-foreground">Connect</span>
                 </div>
-                <p className="text-sm text-gray-600">Vetted Texas service providers</p>
+                <p className="text-sm text-muted-foreground">Vetted Texas service providers</p>
                 <div className="mt-2">
-                  <div className="flex items-center text-amber-600">
+                  <div className="flex items-center text-amber-600 dark:text-amber-400">
                     <Clock className="w-4 h-4 mr-1" />
                     <span className="text-xs">2 providers contacted</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4">
+              <div className="bg-purple-50 dark:bg-purple-950 rounded-lg p-4">
                 <div className="flex items-center mb-2">
-                  <Award className="w-5 h-5 text-purple-600 mr-2" />
-                  <span className="font-semibold">Achieve</span>
+                  <Award className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
+                  <span className="font-semibold text-card-foreground">Achieve</span>
                 </div>
-                <p className="text-sm text-gray-600">Earn investor badges</p>
+                <p className="text-sm text-muted-foreground">Earn investor badges</p>
                 <div className="mt-2">
-                  <div className="flex items-center text-purple-600">
+                  <div className="flex items-center text-purple-600 dark:text-purple-400">
                     <Award className="w-4 h-4 mr-1" />
                     <span className="text-xs">2 badges earned</span>
                   </div>
@@ -209,7 +207,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-card text-card-foreground py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -219,53 +217,53 @@ export default function HomePage() {
                 </div>
                 <span className="font-bold text-xl">TexasRE Pro</span>
               </div>
-              <p className="text-gray-400 text-sm">The only platform built exclusively for Texas real estate investors.</p>
+              <p className="text-muted-foreground text-sm">The only platform built exclusively for Texas real estate investors.</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Platform</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
+              <h4 className="font-semibold mb-4 text-card-foreground">Platform</h4>
+              <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>
-                  <Link href="/properties" className="hover:text-white transition-colors">
+                  <Link href="/properties" className="hover:text-primary transition-colors">
                     Properties
                   </Link>
                 </li>
                 <li>
-                  <Link href="/analysis" className="hover:text-white transition-colors">
+                  <Link href="/analysis" className="hover:text-primary transition-colors">
                     Deal Analysis
                   </Link>
                 </li>
                 <li>
-                  <Link href="/education" className="hover:text-white transition-colors">
+                  <Link href="/education" className="hover:text-primary transition-colors">
                     Education
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services" className="hover:text-white transition-colors">
+                  <Link href="/services" className="hover:text-primary transition-colors">
                     Services
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Success Stories</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 className="font-semibold mb-4 text-card-foreground">Company</h4>
+              <ul className="space-y-2 text-muted-foreground text-sm">
+                <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Success Stories</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Fair Housing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">TREC Info</a></li>
+              <h4 className="font-semibold mb-4 text-card-foreground">Legal</h4>
+              <ul className="space-y-2 text-muted-foreground text-sm">
+                <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Fair Housing</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">TREC Info</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground text-sm">
             <p>© 2024 TexasRE Pro. All rights reserved. | Licensed Texas Real Estate Brokerage</p>
           </div>
         </div>

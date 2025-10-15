@@ -179,27 +179,27 @@ export default function ServicesPage() {
 
   return (
     <ProtectedRoute>
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Texas Service Providers</h1>
-          <p className="text-gray-600">Vetted professionals to support your investment journey</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Texas Service Providers</h1>
+          <p className="text-muted-foreground">Vetted professionals to support your investment journey</p>
         </div>
 
         {/* Featured Providers */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold">Featured Texas Partners</h2>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Award className="w-4 h-4 text-yellow-500" />
               <span>Platform Vetted & Investor Approved</span>
             </div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProviders.map(provider => (
-              <div key={provider.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition border-2 border-blue-200">
+              <div key={provider.id} className="bg-card rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition border-2 border-blue-200">
                 <div className="bg-gradient-to-br from-blue-50 to-green-50 p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
@@ -209,7 +209,7 @@ export default function ServicesPage() {
                         <div className="flex items-center text-yellow-500">
                           <Star className="w-4 h-4 fill-current" />
                           <span className="text-sm font-semibold ml-1">{provider.rating}</span>
-                          <span className="text-gray-500 text-sm ml-1">({provider.reviews})</span>
+                          <span className="text-muted-foreground text-sm ml-1">({provider.reviews})</span>
                         </div>
                       </div>
                     </div>
@@ -217,9 +217,9 @@ export default function ServicesPage() {
                       FEATURED
                     </span>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">{provider.description}</p>
+                  <p className="text-muted-foreground text-sm mb-4">{provider.description}</p>
                   <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center text-gray-500">
+                    <div className="flex items-center text-muted-foreground">
                       <MapPin className="w-4 h-4 mr-1" />
                       {provider.locations.join(', ')}
                     </div>
@@ -228,10 +228,10 @@ export default function ServicesPage() {
                     </div>
                   </div>
                 </div>
-                <div className="p-4 bg-gray-50">
+                <div className="p-4 bg-background">
                   <button 
                     onClick={() => setSelectedProvider(provider)}
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
+                    className="w-full bg-blue-600 dark:bg-blue-700text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
                   >
                     View Details
                   </button>
@@ -244,7 +244,7 @@ export default function ServicesPage() {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar - Categories & Filters */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-8">
+            <div className="bg-card rounded-2xl shadow-sm p-6 sticky top-8">
               {/* Search */}
               <div className="mb-6">
                 <div className="relative">
@@ -268,8 +268,8 @@ export default function ServicesPage() {
                       onClick={() => setActiveCategory(category.id)}
                       className={`w-full flex items-center justify-between p-3 rounded-lg transition ${
                         activeCategory === category.id
-                          ? 'bg-blue-50 border border-blue-200 text-blue-700'
-                          : 'hover:bg-gray-50 text-gray-700'
+                          ? 'bg-accent border border-blue-200 text-blue-700'
+                          : 'hover:bg-background text-muted-foreground'
                       }`}
                     >
                       <div className="flex items-center">
@@ -285,11 +285,11 @@ export default function ServicesPage() {
               </div>
 
               {/* Additional Filters */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="mt-6 pt-6 border-t border-border">
                 <h4 className="font-semibold mb-3">Filter By</h4>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Response Time</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Response Time</label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       <option>Any</option>
                       <option>Within 1 hour</option>
@@ -298,7 +298,7 @@ export default function ServicesPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Minimum Rating</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Minimum Rating</label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       <option>Any</option>
                       <option>4.5+ Stars</option>
@@ -307,7 +307,7 @@ export default function ServicesPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Location</label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       <option>All Texas</option>
                       <option>Austin Area</option>
@@ -329,7 +329,7 @@ export default function ServicesPage() {
                   {activeCategory === 'all' ? 'All Service Providers' : 
                    serviceCategories.find(cat => cat.id === activeCategory)?.name}
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   {filteredProviders.length} providers found
                 </p>
               </div>
@@ -344,7 +344,7 @@ export default function ServicesPage() {
 
             <div className="grid gap-6">
               {filteredProviders.map(provider => (
-                <div key={provider.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+                <div key={provider.id} className="bg-card rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
                   <div className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4 flex-1">
@@ -362,9 +362,9 @@ export default function ServicesPage() {
                             )}
                           </div>
                           
-                          <p className="text-gray-600 mb-3">{provider.description}</p>
+                          <p className="text-muted-foreground mb-3">{provider.description}</p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                          <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-3">
                             <div className="flex items-center">
                               <Star className="w-4 h-4 text-yellow-500 mr-1" />
                               {provider.rating} ({provider.reviews} reviews)
@@ -395,7 +395,7 @@ export default function ServicesPage() {
                         </div>
                         <button 
                           onClick={() => setSelectedProvider(provider)}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
+                          className="bg-blue-600 dark:bg-blue-700text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
                         >
                           Contact
                         </button>
@@ -412,7 +412,7 @@ export default function ServicesPage() {
       {/* Provider Detail Modal */}
       {selectedProvider && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
@@ -421,12 +421,12 @@ export default function ServicesPage() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">{selectedProvider.name}</h2>
-                    <p className="text-gray-600">{selectedProvider.specialty}</p>
+                    <p className="text-muted-foreground">{selectedProvider.specialty}</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => setSelectedProvider(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-muted-foreground"
                 >
                   ✕
                 </button>
@@ -455,15 +455,15 @@ export default function ServicesPage() {
                   <h3 className="font-semibold mb-3">Service Details</h3>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Response Time:</span>
+                      <span className="text-muted-foreground">Response Time:</span>
                       <span className="font-semibold">{selectedProvider.responseTime}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Fee:</span>
+                      <span className="text-muted-foreground">Fee:</span>
                       <span className="font-semibold text-green-600">{selectedProvider.fee}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Rating:</span>
+                      <span className="text-muted-foreground">Rating:</span>
                       <span className="font-semibold">{selectedProvider.rating} ★ ({selectedProvider.reviews} reviews)</span>
                     </div>
                   </div>
@@ -473,7 +473,7 @@ export default function ServicesPage() {
               <div className="flex space-x-3">
                 <button 
                   onClick={() => setShowContactForm(true)}
-                  className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
+                  className="flex-1 bg-blue-600 dark:bg-blue-700text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />
                   Contact Provider
@@ -494,13 +494,13 @@ export default function ServicesPage() {
       {/* Contact Form Modal */}
       {showContactForm && selectedProvider && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full">
+          <div className="bg-card rounded-2xl max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold">Contact {selectedProvider.name}</h3>
                 <button 
                   onClick={() => setShowContactForm(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-muted-foreground"
                 >
                   ✕
                 </button>
@@ -508,7 +508,7 @@ export default function ServicesPage() {
 
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Your Name
                   </label>
                   <input
@@ -521,7 +521,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Email Address
                   </label>
                   <input
@@ -534,7 +534,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Phone Number
                   </label>
                   <input
@@ -546,7 +546,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Property Details (Optional)
                   </label>
                   <textarea
@@ -559,7 +559,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Message
                   </label>
                   <textarea
@@ -574,7 +574,7 @@ export default function ServicesPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
+                  className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
                 >
                   Send Message to {selectedProvider.name}
                 </button>

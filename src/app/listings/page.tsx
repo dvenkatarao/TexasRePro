@@ -168,17 +168,17 @@ export default function ListingsPage() {
 
   return (
     <ProtectedRoute>
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen  bg-background">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Texas Investment Properties</h1>
-          <p className="text-gray-600">Vetted deals analyzed for investor success</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Texas Investment Properties</h1>
+          <p className="ext-muted-foreground">Vetted deals analyzed for investor success</p>
         </div>
 
         {/* Search and Filters */}
-        <HoverCard className="bg-white rounded-2xl p-6 mb-8">
+        <HoverCard className="bg-card rounded-2xl p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -193,7 +193,7 @@ export default function ListingsPage() {
             {/* Filter Toggle */}
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center bg-white hover:bg-gray-50"
+              className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center bg-card hover: bg-background"
             >
               <Filter className="w-5 h-5 mr-2" />
               Filters
@@ -202,7 +202,7 @@ export default function ListingsPage() {
             
             {/* Sort Dropdown */}
             <div className="relative">
-              <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white transition-colors">
+              <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-card transition-colors">
                 <option>Sort by: Newest</option>
                 <option>Sort by: Price Low-High</option>
                 <option>Sort by: Price High-Low</option>
@@ -215,11 +215,11 @@ export default function ListingsPage() {
 
           {/* Expanded Filters */}
           {showFilters && (
-            <div className="mt-6 pt-6 border-t border-gray-200 animate-in fade-in">
+            <div className="mt-6 pt-6 border-t border-border animate-in fade-in">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* City Filter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <label className="block text-sm font-medium ext-muted-foreground mb-2">City</label>
                   <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                     {cities.map(city => (
                       <option key={city}>{city}</option>
@@ -229,7 +229,7 @@ export default function ListingsPage() {
 
                 {/* Property Type */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+                  <label className="block text-sm font-medium ext-muted-foreground mb-2">Property Type</label>
                   <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                     {propertyTypes.map(type => (
                       <option key={type}>{type}</option>
@@ -239,7 +239,7 @@ export default function ListingsPage() {
 
                 {/* Price Range */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                  <label className="block text-sm font-medium ext-muted-foreground mb-2">Price Range</label>
                   <div className="flex space-x-2">
                     <input
                       type="number"
@@ -256,7 +256,7 @@ export default function ListingsPage() {
 
                 {/* CAP Rate Minimum */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Min CAP Rate</label>
+                  <label className="block text-sm font-medium ext-muted-foreground mb-2">Min CAP Rate</label>
                   <div className="flex items-center space-x-2">
                     <input
                       type="range"
@@ -278,7 +278,7 @@ export default function ListingsPage() {
             {['Austin', 'Dallas', 'Houston', 'San Antonio', 'Duplex', 'Single Family', 'BRRRR Ready', 'Deal Coach Approved', 'Under $500K', 'Cash Flow > $1K'].map(tag => (
               <button
                 key={tag}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors hover:scale-105 transform"
+                className="px-3 py-1 bg-gray-100 ext-muted-foreground rounded-full text-sm hover:bg-gray-200 transition-colors hover:scale-105 transform"
               >
                 {tag}
               </button>
@@ -288,18 +288,18 @@ export default function ListingsPage() {
 
         {/* Results Summary */}
         <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-600">
+          <p className="ext-muted-foreground">
             Showing <span className="font-semibold">{properties.length}</span> properties in Texas
           </p>
           <div className="flex items-center space-x-4">
-            <button className="flex items-center text-gray-600 hover:text-gray-800 transition-colors">
+            <button className="flex items-center ext-muted-foreground hover:text-gray-800 transition-colors">
               <MapPin className="w-4 h-4 mr-1" />
               Map View
             </button>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600">View:</span>
-              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm transition-colors">Grid</button>
-              <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 transition-colors">List</button>
+              <span className="text-sm ext-muted-foreground">View:</span>
+              <button className="px-3 py-1 bg-blue-600 dark:bg-blue-700text-white rounded-lg text-sm transition-colors">Grid</button>
+              <button className="px-3 py-1 bg-gray-200 ext-muted-foreground rounded-lg text-sm hover:bg-gray-300 transition-colors">List</button>
             </div>
           </div>
         </div>
@@ -307,7 +307,7 @@ export default function ListingsPage() {
         {/* Properties Grid */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredProviders.map(property => (
-            <HoverCard key={property.id} className="bg-white rounded-2xl overflow-hidden">
+            <HoverCard key={property.id} className="bg-card rounded-2xl overflow-hidden">
               {/* Property Image/Header */}
               <div className="relative">
                 <div className="bg-gradient-to-br from-blue-100 to-green-100 h-48 flex items-center justify-center">
@@ -317,11 +317,11 @@ export default function ListingsPage() {
                 {/* Status Badge */}
                 <div className="absolute top-4 left-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    property.status === 'Deal Coach Approved' ? 'bg-green-500 text-white' :
+                    property.status === 'Deal Coach Approved' ? 'bg-accent0 text-white' :
                     property.status === 'Hot Deal' ? 'bg-red-500 text-white' :
                     property.status === 'BRRRR Ready' ? 'bg-purple-500 text-white' :
                     property.status === 'Premium Deal' ? 'bg-yellow-500 text-white' :
-                    'bg-blue-500 text-white'
+                    'bg-accent0 text-white'
                   }`}>
                     {property.status}
                   </span>
@@ -331,7 +331,7 @@ export default function ListingsPage() {
                 <button 
                   onClick={() => handleToggleFavorite(property.id)}
                   disabled={loadingProperties.includes(property.id)}
-                  className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all disabled:opacity-50"
+                  className="absolute top-4 right-4 w-8 h-8 bg-card rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all disabled:opacity-50"
                 >
                   {loadingProperties.includes(property.id) ? (
                     <LoadingSpinner size="sm" />
@@ -354,7 +354,7 @@ export default function ListingsPage() {
               {/* Property Details */}
               <div className="p-6">
                 {/* Location */}
-                <div className="flex items-center text-gray-600 mb-2">
+                <div className="flex items-center ext-muted-foreground mb-2">
                   <MapPin className="w-4 h-4 mr-1" />
                   <span className="text-sm">{property.city}, TX</span>
                   <span className="mx-2">•</span>
@@ -362,45 +362,45 @@ export default function ListingsPage() {
                 </div>
 
                 {/* Address */}
-                <h3 className="font-bold text-lg mb-3 hover:text-blue-600 cursor-pointer transition-colors">{property.address}</h3>
+                <h3 className="font-bold text-lg mb-3 hover:text-primary cursor-pointer transition-colors">{property.address}</h3>
 
                 {/* Price */}
-                <div className="text-2xl font-bold text-blue-600 mb-4">
+                <div className="text-2xl font-bold text-primary mb-4">
                   ${property.price.toLocaleString()}
                 </div>
 
                 {/* Property Stats */}
                 <div className="grid grid-cols-4 gap-2 mb-4">
                   <div className="text-center">
-                    <Bed className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <Bed className="w-4 h-4 ext-muted-foreground mx-auto mb-1" />
                     <div className="text-sm font-semibold">{property.beds}</div>
-                    <div className="text-xs text-gray-600">Beds</div>
+                    <div className="text-xs ext-muted-foreground">Beds</div>
                   </div>
                   <div className="text-center">
-                    <Bath className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <Bath className="w-4 h-4 ext-muted-foreground mx-auto mb-1" />
                     <div className="text-sm font-semibold">{property.baths}</div>
-                    <div className="text-xs text-gray-600">Baths</div>
+                    <div className="text-xs ext-muted-foreground">Baths</div>
                   </div>
                   <div className="text-center">
-                    <Square className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <Square className="w-4 h-4 ext-muted-foreground mx-auto mb-1" />
                     <div className="text-sm font-semibold">{property.sqft.toLocaleString()}</div>
-                    <div className="text-xs text-gray-600">Sq Ft</div>
+                    <div className="text-xs ext-muted-foreground">Sq Ft</div>
                   </div>
                   <div className="text-center">
-                    <TrendingUp className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <TrendingUp className="w-4 h-4 ext-muted-foreground mx-auto mb-1" />
                     <div className="text-sm font-semibold">{property.capRate}%</div>
-                    <div className="text-xs text-gray-600">CAP</div>
+                    <div className="text-xs ext-muted-foreground">CAP</div>
                   </div>
                 </div>
 
                 {/* Financials */}
                 <div className="border-t pt-4 space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Est. Monthly Rent</span>
+                    <span className="text-sm ext-muted-foreground">Est. Monthly Rent</span>
                     <span className="font-semibold">${property.rent}/mo</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Est. Cash Flow</span>
+                    <span className="text-sm ext-muted-foreground">Est. Cash Flow</span>
                     <span className="font-semibold text-green-600">
                       ${property.cashFlow.toLocaleString()}/mo
                     </span>
@@ -411,11 +411,11 @@ export default function ListingsPage() {
                 <div className="flex space-x-3 mt-6">
                   <button 
                     onClick={() => handleQuickAnalyze(property.address)}
-                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-center"
+                    className="flex-1 bg-blue-600 dark:bg-blue-700text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-center"
                   >
                     Analyze Deal
                   </button>
-                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors hover:bg-gray-50">
+                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors hover: bg-background">
                     <Eye className="w-5 h-5" />
                   </button>
                 </div>
@@ -429,7 +429,7 @@ export default function ListingsPage() {
           <button 
             onClick={handleLoadMore}
             disabled={loadingMore}
-            className="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
+            className="bg-card border border-gray-300 ext-muted-foreground px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
           >
             {loadingMore ? (
               <>
@@ -452,9 +452,9 @@ export default function ListingsPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
+              className="flex-1 px-4 py-3 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
             />
-            <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button className="bg-card text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-accent transition-colors">
               Get Early Access
             </button>
           </div>

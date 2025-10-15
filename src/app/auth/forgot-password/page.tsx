@@ -39,15 +39,15 @@ export default function ForgotPasswordPage() {
             </div>
             <span className="font-bold text-2xl">TexasRE Pro</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Reset Password</h1>
-          <p className="text-gray-600">Enter your email to receive a reset link</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Reset Password</h1>
+          <p className="ext-muted-foreground">Enter your email to receive a reset link</p>
         </div>
 
         {/* Forgot Password Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-card rounded-2xl shadow-xl p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium ext-muted-foreground mb-2">
                 Email address
               </label>
               <div className="relative">
@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-foreground"
                   placeholder="investor@example.com"
                   required
                   disabled={isLoading}
@@ -68,7 +68,7 @@ export default function ForgotPasswordPage() {
               <div className={`p-3 rounded-lg text-sm ${
                 message.includes('Error') 
                   ? 'bg-red-50 text-red-700 border border-red-200' 
-                  : 'bg-green-50 text-green-700 border border-green-200'
+                  : 'bg-accent text-green-700 border border-green-200'
               }`}>
                 {message}
               </div>
@@ -77,7 +77,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50"
+              className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50"
             >
               {isLoading ? 'Sending Reset Link...' : 'Send Reset Link'}
             </button>
@@ -86,7 +86,7 @@ export default function ForgotPasswordPage() {
           <div className="mt-6 text-center">
             <Link
               href="/auth/login"
-              className="text-blue-600 hover:text-blue-500 font-semibold flex items-center justify-center">
+              className="text-primary hover:text-blue-500 font-semibold flex items-center justify-center">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Sign In
             </Link>

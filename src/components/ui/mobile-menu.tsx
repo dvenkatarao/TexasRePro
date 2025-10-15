@@ -19,12 +19,12 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
       {/* Menu Panel */}
-      <div className="relative bg-white w-80 max-w-full h-full ml-auto shadow-xl">
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+      <div className="relative bg-card w-80 max-w-full h-full ml-auto shadow-xl">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <span className="text-lg font-semibold">Menu</span>
           <button
             onClick={onClose}
-            className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+            className="p-2 rounded-md ext-muted-foreground hover:text-primary hover:bg-accent"
           >
             <X className="w-6 h-6" />
           </button>
@@ -37,7 +37,7 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
               <Link
                 key={item.name}
                 href={item.href}
-                className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2"
+                className="block text-lg font-medium ext-muted-foreground hover:text-primary py-2"
                 onClick={onClose}>
                 {item.name}
               </Link>
@@ -45,12 +45,12 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
           </nav>
           
           {/* Auth Section */}
-          <div className="pt-6 border-t border-gray-200 space-y-4">
+          <div className="pt-6 border-t border-border space-y-4">
             {user ? (
               <>
                 <Link
                   href="/dashboard"
-                  className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2"
+                  className="block text-lg font-medium ext-muted-foreground hover:text-primary py-2"
                   onClick={onClose}
                 >
                   Dashboard
@@ -63,14 +63,14 @@ export default function MobileMenu({ isOpen, onClose, navigation, user }: Mobile
               <>
                 <Link
                   href="/auth/login"
-                  className="block text-lg font-medium text-gray-700 hover:text-blue-600 py-2"
+                  className="block text-lg font-medium ext-muted-foreground hover:text-primary py-2"
                   onClick={onClose}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold text-center text-lg"
+                  className="block bg-blue-600 dark:bg-blue-700text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold text-center text-lg"
                   onClick={onClose}
                 >
                   Start Free Trial

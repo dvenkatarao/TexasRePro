@@ -15,7 +15,7 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <button className="p-2 rounded-md bg-gray-100 text-gray-600">
+      <button className="p-2 rounded-md bg-gray-100 ext-muted-foreground">
         <Monitor className="w-5 h-5" />
       </button>
     );
@@ -60,7 +60,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+      className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 ext-muted-foreground dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
       aria-label={getThemeLabel()}
       title={getThemeLabel()}
     >

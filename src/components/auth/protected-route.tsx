@@ -42,7 +42,7 @@ export default function ProtectedRoute({ children, requiredSubscription }: Prote
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <LoadingSpinner size="lg" className="mx-auto mb-4" />
-          <p className="text-gray-600">Checking authentication...</p>
+          <p className="ext-muted-foreground">Checking authentication...</p>
         </div>
       </div>
     );
@@ -53,7 +53,7 @@ export default function ProtectedRoute({ children, requiredSubscription }: Prote
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <LoadingSpinner size="lg" className="mx-auto mb-4" />
-          <p className="text-gray-600">Redirecting to login...</p>
+          <p className="ext-muted-foreground">Redirecting to login...</p>
         </div>
       </div>
     );

@@ -48,7 +48,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           </div>
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-2">{property.address || 'Address not available'}</h3>
-            <p className="text-gray-600 mb-2">
+            <p className="ext-muted-foreground mb-2">
               {property.city || ''}, {property.state || ''} {property.zipCode || ''}
             </p>
             <div className="flex items-center justify-between mb-3">
@@ -60,7 +60,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
                 <Badge variant="secondary">{property.bathrooms || 0} BA</Badge>
               </div>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm ext-muted-foreground">
               <p>{county} • {squareFeet.toLocaleString()} sq ft</p>
               <p>Tax Rate: {taxRate}%</p>
             </div>

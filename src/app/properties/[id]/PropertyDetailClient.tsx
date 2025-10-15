@@ -33,7 +33,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
     };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen  bg-background">
       {/* Hero Section */}
       <div className="relative h-64 bg-gradient-to-r from-blue-600 to-blue-800">
         <div className="absolute inset-0 bg-black/40" />
@@ -44,7 +44,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
               {property.city}, {property.state} {property.zip_code}
             </p>
             <div className="flex items-center gap-4">
-              <Badge className="text-lg px-4 py-1 bg-white text-blue-600">
+              <Badge className="text-lg px-4 py-1 bg-card text-primary">
                 ${property.price?.toLocaleString()}
               </Badge>
               <Badge variant="outline" className="text-white border-white">
@@ -56,7 +56,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
       </div>
 
       {/* Action Bar */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -103,19 +103,19 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div>
-                        <p className="text-sm text-gray-600">Type</p>
+                        <p className="text-sm ext-muted-foreground">Type</p>
                         <p className="font-semibold">{property.property_type}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Square Feet</p>
+                        <p className="text-sm ext-muted-foreground">Square Feet</p>
                         <p className="font-semibold">{property.square_feet?.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">County</p>
+                        <p className="text-sm ext-muted-foreground">County</p>
                         <p className="font-semibold">{property.county || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Year Built</p>
+                        <p className="text-sm ext-muted-foreground">Year Built</p>
                         <p className="font-semibold">{property.year_built || 'N/A'}</p>
                       </div>
                     </div>
@@ -127,7 +127,7 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                     <CardTitle>Description</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{property.description}</p>
+                    <p className="ext-muted-foreground">{property.description}</p>
                   </CardContent>
                 </Card>
               </>
@@ -142,26 +142,26 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="text-center p-4 border rounded-lg">
-                        <p className="text-2xl font-bold text-blue-600">
+                        <p className="text-2xl font-bold text-primary">
                           {property.estimated_rent ? `$${property.estimated_rent}` : 'N/A'}
                         </p>
-                        <p className="text-sm text-gray-600">Est. Monthly Rent</p>
+                        <p className="text-sm ext-muted-foreground">Est. Monthly Rent</p>
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <p className="text-2xl font-bold text-green-600">
                           {property.cap_rate ? `${property.cap_rate}%` : 'N/A'}
                         </p>
-                        <p className="text-sm text-gray-600">Cap Rate</p>
+                        <p className="text-sm ext-muted-foreground">Cap Rate</p>
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <p className="text-2xl font-bold text-purple-600">
                           {property.property_tax_rate ? `${property.property_tax_rate}%` : 'N/A'}
                         </p>
-                        <p className="text-sm text-gray-600">Tax Rate</p>
+                        <p className="text-sm ext-muted-foreground">Tax Rate</p>
                       </div>
                     </div>
                     
-                    <div className="p-4 bg-blue-50 rounded-lg">
+                    <div className="p-4 bg-accent rounded-lg">
                       <h4 className="font-semibold text-blue-800 mb-2">Texas Investment Insights</h4>
                       <ul className="text-sm text-blue-700 space-y-1">
                         <li>• Property tax protest opportunities available</li>
@@ -178,9 +178,9 @@ export default function PropertyDetailClient({ property }: PropertyDetailClientP
 
           {/* Sidebar */}
           <div className="space-y-6">
-            <Card className="border-green-200 bg-green-50">
+            <Card className="border-green-200 bg-accent">
               <CardHeader>
-                <CardTitle className="text-green-800">Investment Potential</CardTitle>
+                <CardTitle className="text-green-800 dark:text-green-200">Investment Potential</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-center">

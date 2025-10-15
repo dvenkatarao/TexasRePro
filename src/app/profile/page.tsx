@@ -33,19 +33,19 @@ export default function ProfilePage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
         {/*<Header /> */}
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Account Settings</h1>
-            <p className="text-gray-600">Manage your profile and preferences</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Account Settings</h1>
+            <p className="text-muted-foreground">Manage your profile and preferences</p>
           </div>
 
           <div className="grid lg:grid-cols-4 gap-8">
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-8">
+              <div className="bg-card rounded-2xl shadow-sm p-6 sticky top-8">
                 <nav className="space-y-2">
                   {[
                     { id: 'profile', label: 'Profile', icon: User },
@@ -60,8 +60,8 @@ export default function ProfilePage() {
                         onClick={() => setActiveTab(item.id)}
                         className={`w-full flex items-center px-4 py-3 rounded-lg transition ${
                           activeTab === item.id
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                            : 'text-gray-700 hover:bg-gray-50'
+                            ? 'bg-accent text-blue-700 border border-blue-200'
+                            : 'text-muted-foreground hover:bg-background'
                         }`}
                       >
                         <IconComponent className="w-5 h-5 mr-3" />
@@ -76,13 +76,13 @@ export default function ProfilePage() {
             {/* Main Content */}
             <div className="lg:col-span-3">
               {activeTab === 'profile' && (
-                <div className="bg-white rounded-2xl shadow-sm p-6">
+                <div className="bg-card rounded-2xl shadow-sm p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold">Profile Information</h2>
                     <button
                       onClick={handleSaveProfile}
                       disabled={isLoading}
-                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+                      className="flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
                     >
                       {isLoading ? <LoadingSpinner size="sm" /> : <Save className="w-4 h-4 mr-2" />}
                       {isLoading ? 'Saving...' : 'Save Changes'}
@@ -91,7 +91,7 @@ export default function ProfilePage() {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">
                         First Name
                       </label>
                       <input
@@ -102,7 +102,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">
                         Last Name
                       </label>
                       <input
@@ -113,7 +113,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">
                         Email Address
                       </label>
                       <input
@@ -124,7 +124,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">
                         Phone Number
                       </label>
                       <input
@@ -139,13 +139,13 @@ export default function ProfilePage() {
               )}
 
               {activeTab === 'subscription' && (
-                <div className="bg-white rounded-2xl shadow-sm p-6">
+                <div className="bg-card rounded-2xl shadow-sm p-6">
                   <h2 className="text-xl font-bold mb-6">Subscription Plan</h2>
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 mb-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="text-2xl font-bold capitalize">{user?.subscription} Plan</h3>
-                        <p className="text-gray-600">Active subscription</p>
+                        <p className="text-muted-foreground">Active subscription</p>
                       </div>
                       <div className="text-right">
                         <div className="text-3xl font-bold">
@@ -153,13 +153,13 @@ export default function ProfilePage() {
                           {user?.subscription === 'professional' && '$79'}
                           {user?.subscription === 'enterprise' && '$149'}
                         </div>
-                        <div className="text-gray-600">per month</div>
+                        <div className="text-muted-foreground">per month</div>
                       </div>
                     </div>
                   </div>
                   <Link
                     href="/upgrade"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+                    className="inline-flex items-center px-6 py-3 bg-blue-600 dark:bg-blue-700text-white rounded-lg hover:bg-blue-700 transition font-semibold">
                     Upgrade Plan
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>

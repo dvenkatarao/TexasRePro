@@ -178,15 +178,15 @@ export default function AnalysisPage() {
 
   return (
     <ProtectedRoute>
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Deal Analysis Tool</h1>
-              <p className="text-gray-600">Crunch the numbers for any Texas investment property</p>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Deal Analysis Tool</h1>
+              <p className="text-muted-foreground">Crunch the numbers for any Texas investment property</p>
             </div>
             <div className="flex items-center space-x-3">
               <button 
@@ -223,8 +223,8 @@ export default function AnalysisPage() {
               onClick={() => setActiveTab(tab)}
               className={`flex-1 py-3 px-4 rounded-md text-sm font-medium capitalize transition-all ${
                 activeTab === tab 
-                  ? 'bg-white text-blue-600 shadow-sm transform scale-105' 
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                  ? 'bg-card text-primary shadow-sm transform scale-105' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-gray-200'
               }`}
             >
               {tab === 'calculator' && <Calculator className="w-4 h-4 inline mr-2" />}
@@ -240,14 +240,14 @@ export default function AnalysisPage() {
             {/* Input Form */}
             <div className="lg:col-span-2 space-y-8">
               {/* Property Details Card */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <div className="flex items-center mb-6">
-                  <Building className="w-5 h-5 text-blue-600 mr-2" />
+                  <Building className="w-5 h-5 text-primary mr-2" />
                   <h2 className="text-lg font-semibold">Property Details</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Purchase Price
                     </label>
                     <div className="relative">
@@ -261,7 +261,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Closing Costs
                     </label>
                     <div className="relative">
@@ -275,7 +275,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Repair Budget
                     </label>
                     <div className="relative">
@@ -292,14 +292,14 @@ export default function AnalysisPage() {
               </HoverCard>
 
               {/* Rental Income Card */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <div className="flex items-center mb-6">
                   <DollarSign className="w-5 h-5 text-green-600 mr-2" />
                   <h2 className="text-lg font-semibold">Rental Income</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Unit 1 Rent
                     </label>
                     <div className="relative">
@@ -313,7 +313,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Unit 2 Rent
                     </label>
                     <div className="relative">
@@ -327,7 +327,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Unit 3 Rent
                     </label>
                     <div className="relative">
@@ -341,7 +341,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Vacancy Rate (%)
                     </label>
                     <div className="relative">
@@ -360,7 +360,7 @@ export default function AnalysisPage() {
               </HoverCard>
 
               {/* Operating Expenses Card */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <div className="flex items-center mb-6">
                   <TrendingUp className="w-5 h-5 text-red-600 mr-2" />
                   <h2 className="text-lg font-semibold">Operating Expenses</h2>
@@ -375,7 +375,7 @@ export default function AnalysisPage() {
                     { label: 'HOA Fees', value: 'hoaFees', icon: Building },
                   ].map(({ label, value, icon: Icon }) => (
                     <div key={value}>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">
                         {label}
                       </label>
                       <div className="relative">
@@ -393,14 +393,14 @@ export default function AnalysisPage() {
               </HoverCard>
 
               {/* Financing Card */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <div className="flex items-center mb-6">
                   <BarChart3 className="w-5 h-5 text-purple-600 mr-2" />
                   <h2 className="text-lg font-semibold">Financing</h2>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Down Payment (%)
                     </label>
                     <div className="relative">
@@ -416,7 +416,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Interest Rate (%)
                     </label>
                     <div className="relative">
@@ -433,7 +433,7 @@ export default function AnalysisPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Loan Term (years)
                     </label>
                     <div className="relative">
@@ -455,7 +455,7 @@ export default function AnalysisPage() {
             {/* Results Sidebar */}
             <div className="space-y-6">
               {/* Quick Summary */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <h3 className="text-lg font-semibold mb-4">Investment Summary</h3>
                 {isCalculating ? (
                   <div className="flex justify-center py-8">
@@ -464,27 +464,27 @@ export default function AnalysisPage() {
                 ) : (
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Total Investment</span>
+                      <span className="text-muted-foreground">Total Investment</span>
                       <span className="font-semibold">${report?.totalInvestment?.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Monthly Cash Flow</span>
+                      <span className="text-muted-foreground">Monthly Cash Flow</span>
                       <span className={`font-semibold ${(report?.monthlyCashFlow || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                         ${report?.monthlyCashFlow?.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Annual Cash Flow</span>
+                      <span className="text-muted-foreground">Annual Cash Flow</span>
                       <span className={`font-semibold ${(report?.annualCashFlow || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                         ${report?.annualCashFlow?.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">CAP Rate</span>
-                      <span className="font-semibold text-blue-600">{report?.capRate?.toFixed(2)}%</span>
+                      <span className="text-muted-foreground">CAP Rate</span>
+                      <span className="font-semibold text-primary">{report?.capRate?.toFixed(2)}%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Cash on Cash</span>
+                      <span className="text-muted-foreground">Cash on Cash</span>
                       <span className="font-semibold text-purple-600">{report?.cashOnCash?.toFixed(2)}%</span>
                     </div>
                   </div>
@@ -492,7 +492,7 @@ export default function AnalysisPage() {
               </HoverCard>
 
               {/* Deal Assessment */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <h3 className="text-lg font-semibold mb-4">Deal Assessment</h3>
                 {isCalculating ? (
                   <div className="flex justify-center py-4">
@@ -501,7 +501,7 @@ export default function AnalysisPage() {
                 ) : (
                   <div className={`p-4 rounded-lg transition-colors ${
                     (report?.cashOnCash || 0) >= 10 
-                      ? 'bg-green-50 border border-green-200' 
+                      ? 'bg-accent border border-green-200' 
                       : (report?.cashOnCash || 0) >= 5
                       ? 'bg-yellow-50 border border-yellow-200'
                       : 'bg-red-50 border border-red-200'
@@ -522,7 +522,7 @@ export default function AnalysisPage() {
                           : 'Poor Investment'}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       {(report?.cashOnCash || 0) >= 10 
                         ? 'This deal exceeds Texas market averages. Consider moving forward.' 
                         : (report?.cashOnCash || 0) >= 5
@@ -534,7 +534,7 @@ export default function AnalysisPage() {
               </HoverCard>
 
               {/* Expense Breakdown */}
-              <HoverCard className="bg-white rounded-2xl p-6">
+              <HoverCard className="bg-card rounded-2xl p-6">
                 <h3 className="text-lg font-semibold mb-4">Expense Breakdown</h3>
                 <div className="h-48">
                   {isCalculating ? (
@@ -569,7 +569,7 @@ export default function AnalysisPage() {
               <button 
                 onClick={handleExportReport}
                 disabled={isExporting || isCalculating}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center disabled:opacity-50"
+                className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center disabled:opacity-50"
               >
                 {isExporting ? (
                   <>
@@ -588,13 +588,13 @@ export default function AnalysisPage() {
         )}
 
         {activeTab === 'report' && report && (
-          <HoverCard className="bg-white rounded-2xl shadow-sm p-8">
+          <HoverCard className="bg-card rounded-2xl shadow-sm p-8">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold">Comprehensive Analysis Report</h2>
               <button 
                 onClick={handleExportReport}
                 disabled={isExporting}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                className="flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
               >
                 {isExporting ? <LoadingSpinner size="sm" /> : <Download className="w-4 h-4 mr-2" />}
                 {isExporting ? 'Exporting...' : 'Export PDF'}
@@ -602,21 +602,21 @@ export default function AnalysisPage() {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="text-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                <div className="text-2xl font-bold text-blue-600">${report.monthlyCashFlow?.toLocaleString()}</div>
-                <div className="text-sm text-gray-600">Monthly Cash Flow</div>
+              <div className="text-center p-4 bg-accent rounded-lg hover:bg-blue-100 transition-colors">
+                <div className="text-2xl font-bold text-primary">${report.monthlyCashFlow?.toLocaleString()}</div>
+                <div className="text-sm text-muted-foreground">Monthly Cash Flow</div>
               </div>
-              <div className="text-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+              <div className="text-center p-4 bg-accent rounded-lg hover:bg-green-100 dark:bg-green-900 transition-colors">
                 <div className="text-2xl font-bold text-green-600">{report.capRate?.toFixed(2)}%</div>
-                <div className="text-sm text-gray-600">CAP Rate</div>
+                <div className="text-sm text-muted-foreground">CAP Rate</div>
               </div>
               <div className="text-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
                 <div className="text-2xl font-bold text-purple-600">{report.cashOnCash?.toFixed(2)}%</div>
-                <div className="text-sm text-gray-600">Cash on Cash</div>
+                <div className="text-sm text-muted-foreground">Cash on Cash</div>
               </div>
               <div className="text-center p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors">
                 <div className="text-2xl font-bold text-orange-600">{(report.netOperatingIncome / report.effectiveGrossIncome * 100)?.toFixed(1)}%</div>
-                <div className="text-sm text-gray-600">Profit Margin</div>
+                <div className="text-sm text-muted-foreground">Profit Margin</div>
               </div>
             </div>
 

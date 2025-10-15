@@ -258,7 +258,7 @@ export default function PropertiesPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-background flex items-center justify-center">
           <LoadingSpinner size="lg" />
         </div>
       </ProtectedRoute>
@@ -267,17 +267,17 @@ export default function PropertiesPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Texas Investment Properties</h1>
-            <p className="text-gray-600">Vetted deals analyzed for investor success</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Texas Investment Properties</h1>
+            <p className="text-muted-foreground">Vetted deals analyzed for investor success</p>
           </div>
 
           {/* Search and Filters */}
-          <HoverCard className="bg-white rounded-2xl p-6 mb-8">
+          <HoverCard className="bg-cardrounded-2xl p-6 mb-8">
             <div className="flex flex-col lg:flex-row gap-4">
               {/* Search Bar */}
               <div className="flex-1 relative">
@@ -292,7 +292,7 @@ export default function PropertiesPage() {
               {/* Filter Toggle */}
               <button 
                 onClick={() => setShowFilters(!showFilters)}
-                className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center bg-white hover:bg-gray-50"
+                className="lg:w-auto w-full px-6 py-3 border border-gray-300 rounded-lg hover:border-gray-400 transition flex items-center justify-center bg-cardhover:bg-background"
               >
                 <Filter className="w-5 h-5 mr-2" />
                 Filters
@@ -301,7 +301,7 @@ export default function PropertiesPage() {
               
               {/* Sort Dropdown */}
               <div className="relative">
-                <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white transition-colors">
+                <select className="lg:w-auto w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-cardtransition-colors">
                   <option>Sort by: Newest</option>
                   <option>Sort by: Price Low-High</option>
                   <option>Sort by: Price High-Low</option>
@@ -314,11 +314,11 @@ export default function PropertiesPage() {
 
             {/* Expanded Filters */}
             {showFilters && (
-              <div className="mt-6 pt-6 border-t border-gray-200 animate-in fade-in">
+              <div className="mt-6 pt-6 border-t border-border animate-in fade-in">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* City Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">City</label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                       {cities.map(city => (
                         <option key={city}>{city}</option>
@@ -328,7 +328,7 @@ export default function PropertiesPage() {
 
                   {/* Property Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Property Type</label>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
                       {propertyTypes.map(type => (
                         <option key={type}>{type}</option>
@@ -338,7 +338,7 @@ export default function PropertiesPage() {
 
                   {/* Price Range */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Price Range</label>
                     <div className="flex space-x-2">
                       <input
                         type="number"
@@ -355,7 +355,7 @@ export default function PropertiesPage() {
 
                   {/* CAP Rate Minimum */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Min CAP Rate</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Min CAP Rate</label>
                     <div className="flex items-center space-x-2">
                       <input
                         type="range"
@@ -377,7 +377,7 @@ export default function PropertiesPage() {
               {['Austin', 'Dallas', 'Houston', 'San Antonio', 'Duplex', 'Single Family', 'BRRRR Ready', 'Deal Coach Approved', 'Under $500K', 'Cash Flow > $1K'].map(tag => (
                 <button
                   key={tag}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors hover:scale-105 transform"
+                  className="px-3 py-1 bg-gray-100 text-muted-foreground rounded-full text-sm hover:bg-gray-200 transition-colors hover:scale-105 transform"
                 >
                   {tag}
                 </button>
@@ -387,18 +387,18 @@ export default function PropertiesPage() {
 
           {/* Results Summary */}
           <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Showing <span className="font-semibold">{properties.length}</span> properties in Texas
             </p>
             <div className="flex items-center space-x-4">
-              <button className="flex items-center text-gray-600 hover:text-gray-800 transition-colors">
+              <button className="flex items-center text-muted-foreground hover:text-gray-800 transition-colors">
                 <MapPin className="w-4 h-4 mr-1" />
                 Map View
               </button>
               <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">View:</span>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm transition-colors">Grid</button>
-                <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 transition-colors">List</button>
+                <span className="text-sm text-muted-foreground">View:</span>
+                <button className="px-3 py-1 bg-blue-600 dark:bg-blue-700text-white rounded-lg text-sm transition-colors">Grid</button>
+                <button className="px-3 py-1 bg-gray-200 text-muted-foreground rounded-lg text-sm hover:bg-gray-300 transition-colors">List</button>
               </div>
             </div>
           </div>
@@ -415,7 +415,7 @@ export default function PropertiesPage() {
             <button 
               onClick={handleLoadMore}
               disabled={loadingMore}
-              className="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
+              className="bg-cardborder border-gray-300 text-muted-foreground px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
             >
               {loadingMore ? (
                 <>
@@ -438,9 +438,9 @@ export default function PropertiesPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
+                className="flex-1 px-4 py-3 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors"
               />
-              <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              <button className="bg-cardtext-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-accent transition-colors">
                 Get Early Access
               </button>
             </div>

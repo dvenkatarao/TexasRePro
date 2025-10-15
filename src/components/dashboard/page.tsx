@@ -18,12 +18,12 @@ export default async function DashboardPage() {
   const recentProperties = properties.slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen  bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back!</h1>
-          <p className="text-gray-600">Here's your investment overview</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back!</h1>
+          <p className="ext-muted-foreground">Here's your investment overview</p>
         </div>
 
         {/* Stats Grid */}
@@ -31,11 +31,11 @@ export default async function DashboardPage() {
           {dashboardStats.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <div key={stat.label} className="bg-white rounded-lg shadow-sm border p-6">
+              <div key={stat.label} className="bg-card rounded-lg shadow-sm border p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+                    <p className="text-sm font-medium ext-muted-foreground">{stat.label}</p>
+                    <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
                   </div>
                   <div className={`p-3 rounded-full bg-${stat.color}-100`}>
                     <IconComponent className={`w-6 h-6 text-${stat.color}-600`} />
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Recent Properties */}
-          <div className="bg-white rounded-lg shadow-sm border p-6">
+          <div className="bg-card rounded-lg shadow-sm border p-6">
             <h2 className="text-xl font-semibold mb-4">Recently Viewed Properties</h2>
             <div className="space-y-4">
               {recentProperties.map((property) => (
@@ -59,26 +59,26 @@ export default async function DashboardPage() {
             </div>
             <Link 
               href="/properties" 
-              className="block text-center mt-4 text-blue-600 hover:text-blue-700 font-medium"
+              className="block text-center mt-4 text-primary hover:text-blue-700 font-medium"
             >
               View All Properties →
             </Link>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-lg shadow-sm border p-6">
+          <div className="bg-card rounded-lg shadow-sm border p-6">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-4">
               <Link 
                 href="/properties" 
-                className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center hover:bg-blue-100 transition-colors"
+                className="bg-accent border border-blue-200 rounded-lg p-4 text-center hover:bg-blue-100 transition-colors"
               >
-                <Home className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                <Home className="w-8 h-8 text-primary mx-auto mb-2" />
                 <span className="font-medium text-blue-900">Browse Properties</span>
               </Link>
               <Link 
                 href="/analysis" 
-                className="bg-green-50 border border-green-200 rounded-lg p-4 text-center hover:bg-green-100 transition-colors"
+                className="bg-accent border border-green-200 rounded-lg p-4 text-center hover:bg-green-100 dark:bg-green-900 transition-colors"
               >
                 <BarChart3 className="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <span className="font-medium text-green-900">Analyze Deal</span>

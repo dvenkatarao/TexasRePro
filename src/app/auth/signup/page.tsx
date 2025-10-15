@@ -65,17 +65,17 @@ export default function SignupPage() {
             </div>
             <span className="font-bold text-2xl">TexasRE Pro</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Start Your Texas Investment Journey</h1>
-          <p className="text-gray-600">Join 12,000+ successful Texas real estate investors</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Start Your Texas Investment Journey</h1>
+          <p className="ext-muted-foreground">Join 12,000+ successful Texas real estate investors</p>
         </div>
 
         {/* Signup Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-card rounded-2xl shadow-xl p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Name Fields */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ext-muted-foreground mb-2">
                   First Name
                 </label>
                 <div className="relative">
@@ -93,7 +93,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ext-muted-foreground mb-2">
                   Last Name
                 </label>
                 <div className="relative">
@@ -113,7 +113,7 @@ export default function SignupPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium ext-muted-foreground mb-2">
                 Email address
               </label>
               <div className="relative">
@@ -132,7 +132,7 @@ export default function SignupPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium ext-muted-foreground mb-2">
                 Password
               </label>
               <div className="relative">
@@ -149,7 +149,7 @@ export default function SignupPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:ext-muted-foreground"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -159,24 +159,24 @@ export default function SignupPage() {
 
             {/* Investor Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium ext-muted-foreground mb-3">
                 Which best describes you?
               </label>
               <div className="grid gap-3">
                 {investorTypes.map((type) => (
-                  <label key={type.value} className="flex items-center p-4 border border-gray-300 rounded-lg hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition">
+                  <label key={type.value} className="flex items-center p-4 border border-gray-300 rounded-lg hover:border-blue-300 hover:bg-accent cursor-pointer transition">
                     <input
                       type="radio"
                       name="investorType"
                       value={type.value}
                       checked={formData.investorType === type.value}
                       onChange={(e) => setFormData({...formData, investorType: e.target.value})}
-                      className="text-blue-600 border-gray-300 focus:ring-blue-500"
+                      className="text-primary border-gray-300 focus:ring-blue-500"
                       disabled={isLoading}
                     />
                     <div className="ml-3">
-                      <div className="font-medium text-gray-900">{type.label}</div>
-                      <div className="text-sm text-gray-500">{type.description}</div>
+                      <div className="font-medium text-foreground">{type.label}</div>
+                      <div className="text-sm ext-muted-foreground">{type.description}</div>
                     </div>
                   </label>
                 ))}
@@ -189,22 +189,22 @@ export default function SignupPage() {
                 type="checkbox"
                 checked={formData.agreeToTerms}
                 onChange={(e) => setFormData({...formData, agreeToTerms: e.target.checked})}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1"
+                className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-blue-500 mt-1"
                 required
                 disabled={isLoading}
               />
-              <label className="ml-2 text-sm text-gray-700">
+              <label className="ml-2 text-sm ext-muted-foreground">
                 I agree to the{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-500">Terms of Service</a>
+                <a href="#" className="text-primary hover:text-blue-500">Terms of Service</a>
                 {' '}and{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                <a href="#" className="text-primary hover:text-blue-500">Privacy Policy</a>
               </label>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -221,9 +221,9 @@ export default function SignupPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="ext-muted-foreground">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-blue-600 hover:text-blue-500 font-semibold">
+              <Link href="/auth/login" className="text-primary hover:text-blue-500 font-semibold">
                 Sign in here
               </Link>
             </p>
@@ -232,15 +232,15 @@ export default function SignupPage() {
 
         {/* Benefits */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
             <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
             <div className="text-sm font-semibold">No Credit Card Required</div>
           </div>
-          <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
             <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
             <div className="text-sm font-semibold">14-Day Free Trial</div>
           </div>
-          <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
             <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
             <div className="text-sm font-semibold">Cancel Anytime</div>
           </div>

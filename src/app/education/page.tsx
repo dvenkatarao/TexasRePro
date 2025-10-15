@@ -218,37 +218,37 @@ export default function EducationPage() {
   return (
     <ProtectedRoute>
 
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Texas Investor Education Center</h1>
-          <p className="text-gray-600">Build confidence and expertise with Texas-specific real estate knowledge</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Texas Investor Education Center</h1>
+          <p className="text-muted-foreground">Build confidence and expertise with Texas-specific real estate knowledge</p>
         </div>
 
         {/* User Progress Overview */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
+        <div className="bg-card rounded-2xl shadow-sm p-6 mb-8">
           <div className="grid md:grid-cols-5 gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{userStats.confidenceScore}%</div>
-              <div className="text-sm text-gray-600">Confidence Score</div>
+              <div className="text-2xl font-bold text-primary">{userStats.confidenceScore}%</div>
+              <div className="text-sm text-muted-foreground">Confidence Score</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">{userStats.badgesEarned}</div>
-              <div className="text-sm text-gray-600">Badges Earned</div>
+              <div className="text-sm text-muted-foreground">Badges Earned</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">{userStats.coursesCompleted}</div>
-              <div className="text-sm text-gray-600">Courses Completed</div>
+              <div className="text-sm text-muted-foreground">Courses Completed</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-orange-600">{userStats.hoursLearned}h</div>
-              <div className="text-sm text-gray-600">Hours Learned</div>
+              <div className="text-sm text-muted-foreground">Hours Learned</div>
             </div>
             <div className="text-center">
-              <div className="text-sm font-semibold text-gray-900">{userStats.nextMilestone}</div>
-              <div className="text-xs text-gray-600">Next Milestone</div>
+              <div className="text-sm font-semibold text-foreground">{userStats.nextMilestone}</div>
+              <div className="text-xs text-muted-foreground">Next Milestone</div>
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function EducationPage() {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar - Learning Paths */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-8">
+            <div className="bg-card rounded-2xl shadow-sm p-6 sticky top-8">
               <h3 className="text-lg font-semibold mb-4">Learning Paths</h3>
               <div className="space-y-2">
                 {Object.entries(learningPaths).map(([key, path]) => (
@@ -265,15 +265,15 @@ export default function EducationPage() {
                     onClick={() => setActiveCategory(key)}
                     className={`w-full text-left p-3 rounded-lg transition ${
                       activeCategory === key
-                        ? 'bg-blue-50 border border-blue-200 text-blue-700'
-                        : 'hover:bg-gray-50 text-gray-700'
+                        ? 'bg-accent border border-blue-200 text-blue-700'
+                        : 'hover:bg-background text-muted-foreground'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-medium capitalize">{key}</span>
-                      <span className="text-sm text-gray-500">{path.progress}%</span>
+                      <span className="text-sm text-muted-foreground">{path.progress}%</span>
                     </div>
-                    <div className="text-xs text-gray-600">{path.modules.length} modules</div>
+                    <div className="text-xs text-muted-foreground">{path.modules.length} modules</div>
                   </button>
                 ))}
               </div>
@@ -289,7 +289,7 @@ export default function EducationPage() {
                       <div className="text-xs text-yellow-700">Completed Texas Basics</div>
                     </div>
                   </div>
-                  <div className="flex items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                  <div className="flex items-center p-3 bg-accent rounded-lg border border-green-200">
                     <Award className="w-5 h-5 text-green-600 mr-2" />
                     <div>
                       <div className="text-sm font-semibold">Financial Analysis</div>
@@ -311,20 +311,20 @@ export default function EducationPage() {
           {/* Main Content */}
           <div className="lg:col-span-3">
             {/* Path Header */}
-            <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+            <div className="bg-card rounded-2xl shadow-sm p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">{currentPath.title}</h2>
-                  <p className="text-gray-600">{currentPath.description}</p>
+                  <h2 className="text-xl font-bold text-foreground">{currentPath.title}</h2>
+                  <p className="text-muted-foreground">{currentPath.description}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-600">{currentPath.progress}%</div>
-                  <div className="text-sm text-gray-600">Overall Progress</div>
+                  <div className="text-2xl font-bold text-primary">{currentPath.progress}%</div>
+                  <div className="text-sm text-muted-foreground">Overall Progress</div>
                 </div>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                  className="bg-blue-600 dark:bg-blue-700h-2 rounded-full transition-all duration-500"
                   style={{ width: `${currentPath.progress}%` }}
                 />
               </div>
@@ -337,18 +337,18 @@ export default function EducationPage() {
                 const IconComponent = module.icon;
                 
                 return (
-                  <div key={module.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+                  <div key={module.id} className="bg-card rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
                     <div className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-4 flex-1">
                           <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
                             module.color === 'blue' ? 'bg-blue-100' :
-                            module.color === 'green' ? 'bg-green-100' :
+                            module.color === 'green' ? 'bg-green-100 dark:bg-green-900' :
                             module.color === 'purple' ? 'bg-purple-100' :
-                            module.color === 'orange' ? 'bg-orange-100' : 'bg-red-100'
+                            module.color === 'orange' ? 'bg-orange-100' : 'bg-red-100 dark:bg-red-900'
                           }`}>
                             <IconComponent className={`w-6 h-6 ${
-                              module.color === 'blue' ? 'text-blue-600' :
+                              module.color === 'blue' ? 'text-primary' :
                               module.color === 'green' ? 'text-green-600' :
                               module.color === 'purple' ? 'text-purple-600' :
                               module.color === 'orange' ? 'text-orange-600' : 'text-red-600'
@@ -364,9 +364,9 @@ export default function EducationPage() {
                                 </span>
                               )}
                             </div>
-                            <p className="text-gray-600 mb-3">{module.description}</p>
+                            <p className="text-muted-foreground mb-3">{module.description}</p>
                             
-                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                               <div className="flex items-center">
                                 <Clock className="w-4 h-4 mr-1" />
                                 {module.duration}
@@ -398,7 +398,7 @@ export default function EducationPage() {
                               className={`px-4 py-2 rounded-lg font-semibold transition ${
                                 module.isPremium
                                   ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
-                                  : 'bg-blue-600 text-white hover:bg-blue-700'
+                                  : 'bg-blue-600 dark:bg-blue-700text-white hover:bg-blue-700'
                               }`}
                             >
                               {module.isPremium ? (
@@ -418,12 +418,12 @@ export default function EducationPage() {
                       {!isCompleted && module.progress > 0 && (
                         <div className="mt-4">
                           <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-600">Progress</span>
-                            <span className="text-blue-600">{module.progress}%</span>
+                            <span className="text-muted-foreground">Progress</span>
+                            <span className="text-primary">{module.progress}%</span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
                             <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                              className="bg-blue-600 dark:bg-blue-700h-2 rounded-full transition-all duration-500"
                               style={{ width: `${module.progress}%` }}
                             />
                           </div>
@@ -440,7 +440,7 @@ export default function EducationPage() {
               <h3 className="text-xl font-bold mb-6">Featured Texas Courses</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 {featuredCourses.map(course => (
-                  <div key={course.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+                  <div key={course.id} className="bg-card rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
                     <div className="bg-gradient-to-br from-blue-100 to-green-100 h-32 flex items-center justify-center">
                       <span className="text-4xl">{course.image}</span>
                     </div>
@@ -455,9 +455,9 @@ export default function EducationPage() {
                         </div>
                       </div>
                       <h4 className="font-bold text-lg mb-2">{course.title}</h4>
-                      <p className="text-gray-600 text-sm mb-4">{course.description}</p>
+                      <p className="text-muted-foreground text-sm mb-4">{course.description}</p>
                       
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
                         <div className="flex items-center">
                           <Users className="w-4 h-4 mr-1" />
                           {course.students} students
@@ -470,10 +470,10 @@ export default function EducationPage() {
                       
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-sm text-gray-600">Instructor</div>
+                          <div className="text-sm text-muted-foreground">Instructor</div>
                           <div className="font-semibold">{course.instructor}</div>
                         </div>
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold">
+                        <button className="bg-blue-600 dark:bg-blue-700text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold">
                           Enroll - {course.price}
                         </button>
                       </div>
