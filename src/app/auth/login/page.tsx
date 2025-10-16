@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, Shield, XCircle } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context_original';
+import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
 import Toast from '@/components/ui/toast';
 import LoadingSpinner from '@/components/ui/loading-spinner';
@@ -18,9 +18,18 @@ export default function LoginPage() {
   });
 
   const [error, setError] = useState('');
-  const { login, isLoading } = useAuth();
+  const { user, login, isLoading } = useAuth();
   const { toast, showToast, hideToast } = useToast();
   const router = useRouter();
+
+
+  // Add this useEffect to handle redirect after successful login
+  useEffect(() => {
+    if (user) {
+      console.log('✅ User detected, redirecting to dashboard...');
+      router.push('/dashboard');
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,12 +38,24 @@ export default function LoginPage() {
     try {
       await login(formData.email, formData.password);
       showToast('Successfully signed in! Redirecting...', 'success');
-      // REMOVED: router.push('/dashboard'); - Auth context handles redirect
+      // Don't redirect here - let the useEffect above handle it
     } catch (error: any) {
       setError(error.message || 'Login failed. Please try again.');
       showToast(error.message || 'Login failed. Please try again.', 'error');
     }
   };
+
+  // If user is already logged in, show loading while redirecting
+  if (user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
+        <div className="text-center">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-gray-600">Redirecting to dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">

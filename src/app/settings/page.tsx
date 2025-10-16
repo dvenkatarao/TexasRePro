@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuth } from '@/contexts/auth-context_original';
+import { useAuth } from '@/contexts/auth-context';
 import { useRouter } from 'next/navigation';
 import { User, Phone, Camera, Save } from 'lucide-react';
 import { updateUserProfile } from '@/lib/supabase/profile';

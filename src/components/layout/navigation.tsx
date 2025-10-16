@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context_original';
+import { useAuth } from '@/contexts/auth-context';
 import ThemeToggle from '@/components/ui/theme-toggle';
 import { Home, User, LogOut } from 'lucide-react';
 

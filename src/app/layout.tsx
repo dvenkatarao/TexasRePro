@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { AuthProvider } from '@/contexts/auth-context_original';
+import { AuthProvider } from '@/contexts/auth-context';
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { FavoritesProvider } from '@/contexts/favorites-context';
 import Header from '@/components/ui/header'; // ← ADD THIS

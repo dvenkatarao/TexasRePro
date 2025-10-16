@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, Area, AreaChart, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context_original';
+import { useAuth } from '@/contexts/auth-context';
 import ProtectedRoute from '@/components/auth/protected-route';
 
 // Helper components

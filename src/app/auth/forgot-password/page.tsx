@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, ArrowLeft, Home } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context_original';
+import { useAuth } from '@/contexts/auth-context';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');

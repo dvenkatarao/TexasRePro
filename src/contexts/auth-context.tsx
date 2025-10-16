@@ -217,15 +217,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    try {
+  try {
+      console.log('🔐 Starting logout process...');
+      
       const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      setUser(null);
-      router.push('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
+      
+      if (error) {
+      console.error('❌ Supabase logout error:', error);
       throw error;
-    }
+      }
+      
+      console.log('✅ Supabase logout successful');
+      setUser(null);
+      console.log('✅ User state cleared');
+      
+      // Force hard redirect - this is crucial
+      window.location.href = '/';
+      
+  } catch (error) {
+      console.error('💥 Logout failed:', error);
+      throw error;
+  }
   };
 
   return (
