@@ -1,259 +1,333 @@
+// src/app/auth/signup/page.tsx
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Home, Shield, Check } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from 'react';
 import { useAuth } from '@/contexts/auth-context';
-import { useToast } from '@/hooks/use-toast';
-import Toast from '@/components/ui/toast';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import Link from 'next/link';
+import { Mail, Lock, User, Briefcase, AlertCircle, Loader2, CheckCircle } from 'lucide-react';
 
 export default function SignupPage() {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
-    //confirmPassword: '',
-    investorType: 'beginner',
-    agreeToTerms: false
+    confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    investorType: 'beginner'
   });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { signup } = useAuth();
 
-  const { signup, isLoading } = useAuth();
-  const { toast, showToast, hideToast } = useToast();
-  const router = useRouter();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
-  const investorTypes = [
-    { value: 'beginner', label: 'First-Time Investor', description: 'New to real estate investing' },
-    { value: 'experienced', label: 'Experienced Investor', description: 'Own 1-5 properties' },
-    { value: 'advanced', label: 'Advanced Investor', description: 'Own 6+ properties' },
-  ];
+  const validateForm = () => {
+    // Email validation
+    if (!formData.email.includes('@')) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+
+    // Name validation
+    if (!formData.firstName.trim() || !formData.lastName.trim()) {
+      setError('Please enter your first and last name');
+      return false;
+    }
+
+    // Password validation
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setSuccess(false);
 
-    if (!formData.agreeToTerms) {
-      showToast('Please agree to the terms and conditions', 'error');
+    if (!validateForm()) {
       return;
     }
-    
+
+    setIsSubmitting(true);
+
     try {
-      await signup(formData.email, formData.password, formData.firstName, formData.lastName, formData.investorType);
-      showToast('Account created successfully! Redirecting...', 'success');
+      const result = await signup(
+        formData.email,
+        formData.password,
+        formData.firstName,
+        formData.lastName,
+        formData.investorType
+      );
       
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 1500);
+      console.log('📧 Signup result:', result);
+      
+      // Both SUCCESS and CONFIRM_EMAIL mean signup worked
+      setSuccess(true);
+      setIsSubmitting(false);
       
     } catch (err: any) {
       console.error('Signup error:', err);
-      // Show the actual error message from Supabase
-      showToast(err.message || 'Error creating account. Please try again.', 'error');
+      setError(err.message || 'Signup failed. Please try again.');
+      setIsSubmitting(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-              <Home className="w-6 h-6 text-white" />
+  // Success state - show confirmation message
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-green-600" />
             </div>
-            <span className="font-bold text-2xl">TexasRE Pro</span>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Check Your Email!
+            </h2>
+            <p className="text-gray-600 mb-6">
+              We've sent a confirmation email to <strong>{formData.email}</strong>. 
+              Please click the link in the email to verify your account.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              Didn't receive the email? Check your spam folder or{' '}
+              <button className="text-blue-600 hover:underline font-medium">
+                resend confirmation
+              </button>
+            </p>
+            <Link
+              href="/auth/login"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            >
+              Go to Login
+            </Link>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Start Your Texas Investment Journey</h1>
-          <p className="ext-muted-foreground">Join 12,000+ successful Texas real estate investors</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo/Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            🏠 Texas RealEstate Pro
+          </h1>
+          <p className="text-gray-600">
+            Start your real estate investing journey
+          </p>
         </div>
 
         {/* Signup Form */}
-        <div className="bg-card rounded-2xl shadow-xl p-8">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Name Fields */}
-            <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Create Account</h2>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm font-medium text-red-800">{error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Name Inputs */}
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ext-muted-foreground mb-2">
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                   First Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
+                    id="firstName"
+                    name="firstName"
                     type="text"
                     value={formData.firstName}
-                    onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    onChange={handleChange}
                     placeholder="John"
+                    className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    disabled={isSubmitting}
                     required
-                    disabled={isLoading}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium ext-muted-foreground mb-2">
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
                   Last Name
                 </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    type="text"
-                    value={formData.lastName}
-                    onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Doe"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Doe"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
+                  required
+                />
               </div>
             </div>
 
-            {/* Email */}
+            {/* Email Input */}
             <div>
-              <label className="block text-sm font-medium ext-muted-foreground mb-2">
-                Email address
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="email"
+                  name="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="investor@example.com"
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
                   required
-                  disabled={isLoading}
                 />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium ext-muted-foreground mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Create a strong password"
-                  required
-                  disabled={isLoading}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:ext-muted-foreground"
-                  disabled={isLoading}
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
               </div>
             </div>
 
             {/* Investor Type */}
             <div>
-              <label className="block text-sm font-medium ext-muted-foreground mb-3">
-                Which best describes you?
+              <label htmlFor="investorType" className="block text-sm font-medium text-gray-700 mb-2">
+                Investor Experience
               </label>
-              <div className="grid gap-3">
-                {investorTypes.map((type) => (
-                  <label key={type.value} className="flex items-center p-4 border border-gray-300 rounded-lg hover:border-blue-300 hover:bg-accent cursor-pointer transition">
-                    <input
-                      type="radio"
-                      name="investorType"
-                      value={type.value}
-                      checked={formData.investorType === type.value}
-                      onChange={(e) => setFormData({...formData, investorType: e.target.value})}
-                      className="text-primary border-gray-300 focus:ring-blue-500"
-                      disabled={isLoading}
-                    />
-                    <div className="ml-3">
-                      <div className="font-medium text-foreground">{type.label}</div>
-                      <div className="text-sm ext-muted-foreground">{type.description}</div>
-                    </div>
-                  </label>
-                ))}
+              <div className="relative">
+                <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <select
+                  id="investorType"
+                  name="investorType"
+                  value={formData.investorType}
+                  onChange={handleChange}
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                  disabled={isSubmitting}
+                >
+                  <option value="beginner">Beginner - Just starting out</option>
+                  <option value="intermediate">Intermediate - 1-5 properties</option>
+                  <option value="experienced">Experienced - 5+ properties</option>
+                </select>
               </div>
             </div>
 
-            {/* Terms */}
-            <div className="flex items-start">
-              <input
-                type="checkbox"
-                checked={formData.agreeToTerms}
-                onChange={(e) => setFormData({...formData, agreeToTerms: e.target.checked})}
-                className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-blue-500 mt-1"
-                required
-                disabled={isLoading}
-              />
-              <label className="ml-2 text-sm ext-muted-foreground">
-                I agree to the{' '}
-                <a href="#" className="text-primary hover:text-blue-500">Terms of Service</a>
-                {' '}and{' '}
-                <a href="#" className="text-primary hover:text-blue-500">Privacy Policy</a>
+            {/* Password Input */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                Password
               </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="At least 6 characters"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
             </div>
 
+            {/* Confirm Password */}
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm your password"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isSubmitting}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isLoading ? (
+              {isSubmitting ? (
                 <>
-                  <LoadingSpinner size="sm" className="mr-2" />
-                  Creating Account...
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Creating account...
                 </>
               ) : (
-                <>
-                  Start 14-Day Free Trial
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </>
+                'Create Account'
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="ext-muted-foreground">
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500">Or</span>
+            </div>
+          </div>
+
+          {/* Login Link */}
+          <div className="text-center">
+            <p className="text-gray-600">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-primary hover:text-blue-500 font-semibold">
-                Sign in here
+              <Link 
+                href="/auth/login"
+                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                Sign in
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Benefits */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
-            <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
-            <div className="text-sm font-semibold">No Credit Card Required</div>
-          </div>
-          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
-            <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
-            <div className="text-sm font-semibold">14-Day Free Trial</div>
-          </div>
-          <div className="text-center p-4 bg-card rounded-lg shadow-sm">
-            <Check className="w-6 h-6 text-green-500 mx-auto mb-2" />
-            <div className="text-sm font-semibold">Cancel Anytime</div>
-          </div>
+        {/* Terms */}
+        <div className="mt-8 text-center text-sm text-gray-600">
+          <p>
+            By creating an account, you agree to our{' '}
+            <Link href="/terms" className="text-blue-600 hover:underline">
+              Terms of Service
+            </Link>{' '}
+            and{' '}
+            <Link href="/privacy" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </Link>
+          </p>
         </div>
       </div>
-
-      {/* Toast Notifications */}
-      <Toast
-        message={toast.message}
-        type={toast.type}
-        isVisible={toast.isVisible}
-        onClose={hideToast}
-      />
     </div>
   );
 }

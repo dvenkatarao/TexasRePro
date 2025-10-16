@@ -1,197 +1,186 @@
+// src/app/auth/login/page.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, Shield, XCircle } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from 'react';
 import { useAuth } from '@/contexts/auth-context';
-import { useToast } from '@/hooks/use-toast';
-import Toast from '@/components/ui/toast';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { user, login, isLoading } = useAuth();
-  const { toast, showToast, hideToast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { login } = useAuth();
   const router = useRouter();
-
-
-  // Add this useEffect to handle redirect after successful login
-  useEffect(() => {
-    if (user) {
-      console.log('✅ User detected, redirecting to dashboard...');
-      router.push('/dashboard');
-    }
-  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
+    setError('');
+    setIsSubmitting(true);
+
+    // Basic validation
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!email.includes('@')) {
+      setError('Please enter a valid email address');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      await login(formData.email, formData.password);
-      showToast('Successfully signed in! Redirecting...', 'success');
-      // Don't redirect here - let the useEffect above handle it
-    } catch (error: any) {
-      setError(error.message || 'Login failed. Please try again.');
-      showToast(error.message || 'Login failed. Please try again.', 'error');
+      await login(email, password);
+      // The auth context will handle the redirect
+      // If we reach here without error, login was successful
+      console.log('✅ Login initiated, waiting for auth state change...');
+    } catch (err: any) {
+      console.error('❌ Login error caught:', err);
+      setError(err.message || 'Login failed. Please try again.');
+      setIsSubmitting(false);
     }
   };
 
-  // If user is already logged in, show loading while redirecting
-  if (user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
-        <div className="text-center">
-          <LoadingSpinner size="lg" />
-          <p className="mt-4 text-gray-600">Redirecting to dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-              <Home className="w-6 h-6 text-white" />
-            </div>
-            <span className="font-bold text-2xl">TexasRE Pro</span>
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back</h1>
-          <p className="ext-muted-foreground">Sign in to your investor dashboard</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            🏠 Texas RealEstate Pro
+          </h1>
+          <p className="text-gray-600">
+            Welcome back! Sign in to your account
+          </p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-card rounded-2xl shadow-xl p-8">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Sign In</h2>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-red-800">
+                  {error}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email Input */}
             <div>
-              <label className="block text-sm font-medium ext-muted-foreground mb-2">
-                Email address
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="email"
                   type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="investor@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  disabled={isSubmitting}
                   required
-                  disabled={isLoading}
                 />
               </div>
             </div>
 
+            {/* Password Input */}
             <div>
-              <label className="block text-sm font-medium ext-muted-foreground mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
+                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  disabled={isSubmitting}
                   required
-                  disabled={isLoading}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:ext-muted-foreground"
-                  disabled={isLoading}
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.rememberMe}
-                  onChange={(e) => setFormData({...formData, rememberMe: e.target.checked})}
-                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
-                  disabled={isLoading}
-                />
-                <span className="ml-2 text-sm ext-muted-foreground">Remember me</span>
-              </label>
-              <a href="/auth/forgot-password" className="text-sm text-primary hover:text-blue-500">
+            {/* Forgot Password Link */}
+            <div className="flex justify-end">
+              <Link 
+                href="/auth/forgot-password"
+                className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+              >
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
-            {/* Error Display */}
-            {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <XCircle className="h-5 w-5 text-red-400" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
+            {/* Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-600 dark:bg-blue-700text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isSubmitting}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isLoading ? (
+              {isSubmitting ? (
                 <>
-                  <LoadingSpinner size="sm" className="mr-2" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Signing in...
                 </>
               ) : (
-                <>
-                  Sign in to Dashboard
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </>
+                'Sign In'
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="ext-muted-foreground">
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500">Or</span>
+            </div>
+          </div>
+
+          {/* Sign Up Link */}
+          <div className="text-center">
+            <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link href="/auth/signup" className="text-primary hover:text-blue-500 font-semibold">
-                Start your free trial
+              <Link 
+                href="/auth/signup"
+                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                Sign up for free
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Security Badge */}
-        <div className="mt-6 flex items-center justify-center text-sm ext-muted-foreground">
-          <Shield className="w-4 h-4 mr-2" />
-          <span>Bank-level security & encryption</span>
+        {/* Additional Info */}
+        <div className="mt-8 text-center text-sm text-gray-600">
+          <p>
+            By signing in, you agree to our{' '}
+            <Link href="/terms" className="text-blue-600 hover:underline">
+              Terms of Service
+            </Link>{' '}
+            and{' '}
+            <Link href="/privacy" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </Link>
+          </p>
         </div>
       </div>
-
-      {/* Toast Notifications */}
-      <Toast
-        message={toast.message}
-        type={toast.type}
-        isVisible={toast.isVisible}
-        onClose={hideToast}
-      />
     </div>
   );
 }

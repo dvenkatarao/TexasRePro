@@ -23,6 +23,7 @@ export default function ProtectedRoute({ children, requiredSubscription }: Prote
     if (!isLoading && user && requiredSubscription) {
       // Check subscription level (simple tier comparison)
       const subscriptionTiers = {
+        'free' : 0,
         'basic': 1,
         'professional': 2,
         'enterprise': 3
