@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Home, Menu, X, User, LogOut } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context_original';
 import LoadingSpinner from './loading-spinner';
 import ThemeToggle from '@/components/ui/theme-toggle';
 

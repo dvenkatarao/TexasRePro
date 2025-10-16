@@ -6,7 +6,7 @@ import { PropertyCard } from '@/components/property/PropertyCard';
 import { getAllProperties, type Property} from '@/lib/property-service';
 import { BarChart3, Home, TrendingUp, BookOpen, Users, Award } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context_original';
 import { useRouter } from 'next/navigation';
 
 
@@ -16,28 +16,32 @@ export default function DashboardPage() {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    // Redirect if not authenticated
-    if (!authLoading && !user) {
-      router.push('/auth/login');
-      return;
-    }
+useEffect(() => {
+  console.log('🏠 Dashboard auth state:', { user, authLoading });
+  
+  // Only redirect if we're sure there's no user and loading is complete
+  if (!authLoading && !user) {
+    console.log('🚫 No user - redirecting to login');
+    router.push('/auth/login');
+    return;
+  }
 
-    // Load properties if authenticated
-    if (user) {
-      const loadProperties = async () => {
-        try {
-          const props = await getAllProperties();
-          setProperties(props);
-        } catch (error) {
-          console.error('Failed to load properties:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      loadProperties();
-    }
-  }, [user, authLoading, router]);
+  // Load properties if authenticated
+  if (user) {
+    console.log('✅ User authenticated, loading properties...');
+    const loadProperties = async () => {
+      try {
+        const props = await getAllProperties();
+        setProperties(props);
+      } catch (error) {
+        console.error('Failed to load properties:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadProperties();
+  }
+}, [user, authLoading, router]);
 
   // Mock dashboard data
   const dashboardStats = [

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context_original';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 
 interface ProtectedRouteProps {

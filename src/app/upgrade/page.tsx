@@ -4,7 +4,7 @@ import React from 'react';
 import { Star, Check, Zap, Crown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 //import Header from '@/components/ui/header';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context_original';
 
 export default function UpgradePage() {
   const { user } = useAuth();

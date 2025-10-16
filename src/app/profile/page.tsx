@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { User, Mail, Shield, CreditCard, Bell, Settings, Save, ArrowRight } from 'lucide-react';
 import Header from '@/components/ui/header';
 import ProtectedRoute from '@/components/auth/protected-route';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context_original';
 import { useToast } from '@/hooks/use-toast';
 import Toast from '@/components/ui/toast';
 import LoadingSpinner from '@/components/ui/loading-spinner';
